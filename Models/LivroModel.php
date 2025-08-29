@@ -1,46 +1,27 @@
 <?php
-require_once __DIR__ . '/../config/conexao.php';
+require_once __DIR__ . "/../config/conexao.php";
 
-class LivroModel {
+class Livro {
     private $conn;
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Cadastrar livro
-    public function cadastrar($nome, $categoria, $custo, $dias) {
-        $sql = "INSERT INTO livros (nome, categoria, custo_aluguel, dias_emprestimo) 
-                VALUES (:nome, :categoria, :custo, :dias)";
+   public function listar() {
+    $stmt = $this->conn->query("SELECT * FROM livros");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+    public function cadastrar($dados) {
+        $sql = "INSERT INTO livros (titulo, autor, sinopse, custo_aluguel, imagem, tempo_aluguel) 
+                VALUES (:titulo, :autor, :sinopse, :custo_aluguel, :imagem, :tempo_aluguel)";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([
-            ':nome' => $nome,
-            ':categoria' => $categoria,
-            ':custo' => $custo,
-            ':dias' => $dias
-        ]);
-    }
-
-    // Buscar livros com filtros
-    public function buscar($categoria = null, $precoMax = null, $ordenar = "recentes") {
-        $sql = "SELECT * FROM livros WHERE 1=1";
-        
-        if ($categoria) {
-            $sql .= " AND categoria = :categoria";
-        }
-        if ($precoMax) {
-            $sql .= " AND custo_aluguel <= :preco";
-        }
-        if ($ordenar == "recentes") {
-            $sql .= " ORDER BY data_cadastro DESC";
-        } else {
-            $sql .= " ORDER BY custo_aluguel ASC";
-        }
-
-        $stmt = $this->conn->prepare($sql);
-        if ($categoria) $stmt->bindValue(":categoria", $categoria);
-        if ($precoMax) $stmt->bindValue(":preco", $precoMax);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->bindParam(":titulo", $dados['titulo']);
+        $stmt->bindParam(":autor", $dados['autor']);
+        $stmt->bindParam(":sinopse", $dados['sinopse']);
+        $stmt->bindParam(":custo_aluguel", $dados['custo_aluguel']);
+        $stmt->bindParam(":imagem", $dados['imagem']);
+        $stmt->bindParam(":tempo_aluguel", $dados['tempo_aluguel']);
+        return $stmt->execute();
     }
 }
