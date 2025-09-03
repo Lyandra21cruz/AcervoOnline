@@ -17,7 +17,7 @@ class UsuarioModel {
         return $stmt->execute([
             ":nome" => $nome,
             ":email" => $email,
-            ":senha" => $senha
+            ":senha" => $hash
         ]);
     }
 
