@@ -16,7 +16,7 @@ $view       = new UsuarioView();
 $usuarios = $controller->listar();
 $view->mostrarLista($usuarios);
 
-<?php
+
 session_start();
 if(!isset($_SESSION['usuario'])) {
     header("Location: login.php");
