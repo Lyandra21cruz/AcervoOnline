@@ -9,7 +9,7 @@ if ($pagina === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($pagina === 'cadastrar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->cadastrar($_POST['nome'], $_POST['email'], $_POST['senha']);
 } elseif ($pagina === 'recuperar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controller->recuperar($_POST['email'], $_POST['novaSenha']);
+    $controller->recuperar($_POST['email'], $_POST['novaSenha'], $_POST['confirmarSenha']);
 } elseif ($pagina === 'dashboard') {
     session_start();
     if (!isset($_SESSION['usuario'])) {
