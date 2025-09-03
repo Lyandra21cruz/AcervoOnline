@@ -16,8 +16,7 @@ if ($pagina === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: index.php?pagina=login");
         exit;
     }
-    echo "<h2>Bem-vindo, " . $_SESSION['usuario']['nome'] . "!</h2>";
-    echo "<p><a href='logout.php'>Sair</a></p>";
+    header("Location: Views/usuario/dashboard.php");
 } else {
     include __DIR__ . "/Views/usuario/{$pagina}.php";
 }
