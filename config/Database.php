@@ -1,23 +1,24 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $db_name = "biblioteca";
-    private $username = "root";
-    private $password = "";
-    public $db;
+    private static $host = "localhost";
+    private static $db   = "biblioteca"; // coloque o nome do seu banco
+    private static $user = "root";              // padrão do XAMPP
+    private static $pass = "";                  // senha (normalmente vazia no XAMPP)
+    private static $pdo  = null;
 
-    public function getConnection() {
-        $this->db = null;
-        try {
-            $this->db = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->db_name, 
-                $this->username, 
-                $this->password
-            );
-            $this->db->exec("set names utf8");
-        } catch(PDOException $exception) {
-            echo "Erro na conexão: " . $exception->getMessage();
+    public static function getConnection() {
+        if (self::$pdo === null) {
+            try {
+                self::$pdo = new PDO(
+                    "mysql:host=" . self::$host . ";dbname=" . self::$db . ";charset=utf8",
+                    self::$user,
+                    self::$pass
+                );
+                self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Erro na conexão: " . $e->getMessage());
+            }
         }
-        return $this->db;
+        return self::$pdo;
     }
 }
