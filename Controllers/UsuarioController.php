@@ -18,16 +18,20 @@ class UsuarioController {
     }
 
     public function login($email, $senha) {
-        $usuario = $this->model->login($email, $senha);
-        if ($usuario) {
-            session_start();
-            $_SESSION['usuario'] = $usuario;
-            header("Location: index.php?pagina=dashboard");
-            exit;
-        } else {
-            echo "E-mail ou senha incorretos!";
-        }
+    $usuario = $this->model->login($email, $senha);
+
+    if ($usuario) {
+        session_start();
+        $_SESSION['usuario'] = $usuario;
+        header("Location: index.php?pagina=dashboard");
+        exit;
+    } else {
+        // passa mensagem de erro de volta para view
+        $erro = "E-mail ou senha incorretos!";
+        include __DIR__ . '/../Views/usuario/login.php';
     }
+}
+
 
     public function recuperar($email, $novaSenha) {
         if ($this->model->recuperarSenha($email, $novaSenha)) {
