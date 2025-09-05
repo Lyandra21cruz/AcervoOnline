@@ -4,124 +4,82 @@
   <meta charset="UTF-8">
     <!-- Fonte Lisu Bosa -->
   <link href="https://fonts.googleapis.com/css2?family=Lisu+Bosa:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <title>Recuperar Senha</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Arial", sans-serif;
-      background: linear-gradient( #3d2d28, #7a5b48, #a18470);
-      background-size: 200% 200%;
-      animation: gradientMove 8s ease infinite;
-      color: #fff;
-    }
 
-  
-    .wrapper {
-      text-align: center;
-    }
-
-    .titulo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .titulo img {
-      width: 28px;
-      height: 28px;
-    }
-
-    .titulo h2 {
-      font-size: 20px;
-      margin: 0;
-    }
-
-    .container {
-      background: #a18470;
-      width: 500px;
-      padding: 50px 40px;
-      border-radius: 60% 40% 50% 50% / 40% 60% 50% 50%; /* forma orgânica */
-      position: relative;
-      text-align: center;
-      box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      margin: 10px 0 5px;
-      font-size: 13px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 12px;
-      outline: none;
-      margin-bottom: 15px;
-      font-size: 14px;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 12px 35px;
-      background: transparent;
-      border: none;
-      font-size: 17px;
-      font-weight: bold;
-      color: #fff;
-      cursor: pointer;
-      text-decoration: underline;
-      transition: opacity 0.3s ease;
-    }
-
-    button:hover {
-      opacity: 0.8;
-    }
-
-    .voltar {
-      position: absolute;
-      top: 12px;
-      right: 18px;
-    }
-
-    .voltar a {
-      text-decoration: none;
-      color: #fff;
-      font-size: 15px;
-    }
-
-    .voltar a:hover {
-      text-decoration: underline;
-    }
-
-    .erro {
-      margin-top: 10px;
-      color: #ffdddd;
-      font-size: 14px;
-      font-weight: bold;
-      display: none;
-    }
-  </style>
 </head>
 <body>
-  <div class="wrapper">
-    <!-- Título fora da bolha -->
-    <div class="titulo">
-      <img src="" alt="icone">
-      <h2>Recuperar senha</h2>
-    </div>
 
-    <!-- Bolha -->
-    <div class="container">
+
+
+ <section>
+
+        <div class="blob">
+            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="100%" id="blobSvg">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color: rgb(225, 212, 194);"></stop>
+                        <stop offset="100%" style="stop-color: rgb(167, 141, 120);"></stop>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#gradient)">
+                    <animate attributeName="d" dur="10000ms" repeatCount="indefinite" values="
+                        M459.5,296Q441,342,416,384Q391,426,345,446Q299,466,250,465Q201,464,162,436.5Q123,409,79,381.5Q35,354,33.5,302Q32,250,32,197.5Q32,145,70.5,109.5Q109,74,152.5,44.5Q196,15,250.5,12Q305,9,348.5,40.5Q392,72,412.5,117Q433,162,455.5,206Q478,250,459.5,296Z;
+
+                        M471,299Q453,348,418,382.5Q383,417,344,453.5Q305,490,250.5,488Q196,486,145.5,465.5Q95,445,60,401.5Q25,358,19.5,304Q14,250,24,198Q34,146,66.5,103.5Q99,61,147.5,36.5Q196,12,248,21Q300,30,339.5,59.5Q379,89,405.5,125.5Q432,162,460.5,206Q489,250,471,299Z;
+                        
+                        M455,294.5Q436,339,409,377.5Q382,416,341,442.5Q300,469,250.5,466.5Q201,464,157,443Q113,422,89,380.5Q65,339,48,294.5Q31,250,48.5,206Q66,162,86,115.5Q106,69,151,41Q196,13,247.5,25Q299,37,339,63Q379,89,417.5,120Q456,151,465,200.5Q474,250,455,294.5Z;
+                    
+   
+                        M462.5,303Q470,356,433.5,395.5Q397,435,349,454.5Q301,474,251.5,467Q202,460,160.5,437Q119,414,75,385Q31,356,16,303Q1,250,20.5,199.5Q40,149,79,117Q118,85,158,53.5Q198,22,250.5,19Q303,16,342.5,50Q382,84,426,114Q470,144,462.5,197Q455,250,462.5,303Z;
+
+                        M461.5,300Q458,350,425.5,389.5Q393,429,346.5,448.5Q300,468,252.5,457Q205,446,162.5,429.5Q120,413,76,384Q32,355,33,302.5Q34,250,39.5,200.5Q45,151,78,113.5Q111,76,153.5,44.5Q196,13,247.5,25Q299,37,350,49Q401,61,436.5,102Q472,143,468.5,196.5Q465,250,461.5,300Z;
+
+                         M459.5,296Q441,342,416,384Q391,426,345,446Q299,466,250,465Q201,464,162,436.5Q123,409,79,381.5Q35,354,33.5,302Q32,250,32,197.5Q32,145,70.5,109.5Q109,74,152.5,44.5Q196,15,250.5,12Q305,9,348.5,40.5Q392,72,412.5,117Q433,162,455.5,206Q478,250,459.5,296Z">
+
+                    </animate>
+                </path>
+            </svg>
+        </div>
+
+         <div class="blob">
+            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="100%" id="blobSvg">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color: rgb(225, 212, 194);"></stop>
+                        <stop offset="100%" style="stop-color: rgb(167, 141, 120);"></stop>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#gradient)">
+                    <animate attributeName="d" dur="10000ms" repeatCount="indefinite" values="
+                        M459.5,296Q441,342,416,384Q391,426,345,446Q299,466,250,465Q201,464,162,436.5Q123,409,79,381.5Q35,354,33.5,302Q32,250,32,197.5Q32,145,70.5,109.5Q109,74,152.5,44.5Q196,15,250.5,12Q305,9,348.5,40.5Q392,72,412.5,117Q433,162,455.5,206Q478,250,459.5,296Z;
+
+                        M471,299Q453,348,418,382.5Q383,417,344,453.5Q305,490,250.5,488Q196,486,145.5,465.5Q95,445,60,401.5Q25,358,19.5,304Q14,250,24,198Q34,146,66.5,103.5Q99,61,147.5,36.5Q196,12,248,21Q300,30,339.5,59.5Q379,89,405.5,125.5Q432,162,460.5,206Q489,250,471,299Z;
+                        
+                        M455,294.5Q436,339,409,377.5Q382,416,341,442.5Q300,469,250.5,466.5Q201,464,157,443Q113,422,89,380.5Q65,339,48,294.5Q31,250,48.5,206Q66,162,86,115.5Q106,69,151,41Q196,13,247.5,25Q299,37,339,63Q379,89,417.5,120Q456,151,465,200.5Q474,250,455,294.5Z;
+                    
+   
+                        M462.5,303Q470,356,433.5,395.5Q397,435,349,454.5Q301,474,251.5,467Q202,460,160.5,437Q119,414,75,385Q31,356,16,303Q1,250,20.5,199.5Q40,149,79,117Q118,85,158,53.5Q198,22,250.5,19Q303,16,342.5,50Q382,84,426,114Q470,144,462.5,197Q455,250,462.5,303Z;
+
+                        M461.5,300Q458,350,425.5,389.5Q393,429,346.5,448.5Q300,468,252.5,457Q205,446,162.5,429.5Q120,413,76,384Q32,355,33,302.5Q34,250,39.5,200.5Q45,151,78,113.5Q111,76,153.5,44.5Q196,13,247.5,25Q299,37,350,49Q401,61,436.5,102Q472,143,468.5,196.5Q465,250,461.5,300Z;
+
+                         M459.5,296Q441,342,416,384Q391,426,345,446Q299,466,250,465Q201,464,162,436.5Q123,409,79,381.5Q35,354,33.5,302Q32,250,32,197.5Q32,145,70.5,109.5Q109,74,152.5,44.5Q196,15,250.5,12Q305,9,348.5,40.5Q392,72,412.5,117Q433,162,455.5,206Q478,250,459.5,296Z">
+
+                    </animate>
+                </path>
+            </svg>
+        </div>
+
+<div class="container">
+
+ <div class="title-recuperar">
+  
+  <span>Recuperar senha:</span>
+ 
+</div>
+
       <div class="voltar">
         <a href="index.php?pagina=login">Voltar</a>
       </div>
@@ -139,22 +97,7 @@
         <div class="erro" id="erroMsg">As senhas não coincidem.</div>
       </form>
     </div>
-  </div>
-
-  <script>
-    const form = document.getElementById("formSenha");
-    const novaSenha = document.getElementById("novaSenha");
-    const confirmarSenha = document.getElementById("confirmarSenha");
-    const erroMsg = document.getElementById("erroMsg");
-
-    form.addEventListener("submit", function(e) {
-      if (novaSenha.value !== confirmarSenha.value) {
-        e.preventDefault(); // impede envio
-        erroMsg.style.display = "block";
-      } else {
-        erroMsg.style.display = "none";
-      }
-    });
-  </script>
+        
+    </section>
 </body>
 </html>
