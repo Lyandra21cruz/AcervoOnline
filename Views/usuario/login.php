@@ -1,3 +1,23 @@
+<?php
+$erro = '';
+
+// Processa o POST na própria página
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $senha = $_POST['senha'] ?? '';
+
+    // Aqui você faz sua verificação real no banco
+    // Exemplo fictício:
+    if ($email !== 'usuario@teste.com' || $senha !== '123456') {
+        $erro = 'E-mail ou senha incorretos!';
+    } else {
+        // Login correto: iniciar sessão e redirecionar se quiser
+        session_start();
+        $_SESSION['usuario'] = $email;
+        // header('Location: dashboard.php'); exit; // só se login correto
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -6,7 +26,7 @@
     <!-- Fonte Lisu Bosa -->
   <link href="https://fonts.googleapis.com/css2?family=Lisu+Bosa:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <title>Recuperar Senha</title>
+  <title>Login</title>
 
 </head>
 <body>
@@ -78,16 +98,16 @@
         </div>
 
  <div class="container">
-
             <div class="title-recuperar">
                 <span>Bem-vindo ao AcervoOnline!</span>
             </div>
 
+            <!-- Aqui aparece a mensagem de erro, dentro da mesma página -->
             <?php if (!empty($erro)): ?>
                 <div class="erro"><?= $erro ?></div>
             <?php endif; ?>
 
-            <form id="formLogin" method="post" action="index.php?pagina=login">
+            <form id="formLogin" method="post" action="">
                 <label>Email:</label>
                 <input type="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
 
@@ -101,7 +121,6 @@
                 <a href="index.php?pagina=cadastro">Cadastre-se</a> | 
                 <a href="index.php?pagina=recuperar">Esqueci minha senha</a>
             </div>
-
         </div>
     </div>
 </section>
