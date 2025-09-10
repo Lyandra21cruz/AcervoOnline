@@ -111,6 +111,8 @@ die();
             <form id="formLogin" method="post" action="">
                 <label>Email:</label>
                 <input type="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+                <br>
+                
 
                 <label>Senha:</label>
                 <input type="password" name="senha" required>
