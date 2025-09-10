@@ -245,7 +245,7 @@ if (!isset($_SESSION['usuario'])) {
         </a>
 
         <!-- Correção: sair pelo logout.php -->
-        <a href="login.php">
+        <a href="../../index.php">
             <i class="fa-solid fa-right-from-bracket"></i> Sair
         </a>
     </div>
