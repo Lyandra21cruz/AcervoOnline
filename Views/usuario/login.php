@@ -18,6 +18,54 @@ die();
         // header('Location: dashboard.php'); exit; // só se login correto
     }
 }
+
+// Processa o POST na própria página
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $senha = $_POST['senha'] ?? '';
+    $checkAdm = isset($_POST['adm_check']); // checkbox marcado ou não
+
+    try {
+        $sql = "SELECT * FROM usuarios WHERE email = :email AND senha = :senha LIMIT 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senha);
+        $stmt->execute();
+
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$usuario) {
+            $erro = 'E-mail ou senha incorretos!';
+        } else {
+            // Se checkbox ADM estiver marcado, validar na tabela adm
+            if ($checkAdm) {
+                $sqlAdm = "SELECT * FROM adm WHERE id_adm = 1 LIMIT 1";
+                $stmtAdm = $conn->prepare($sqlAdm);
+                $stmtAdm->execute();
+                $adm = $stmtAdm->fetch(PDO::FETCH_ASSOC);
+
+                if ($adm && $adm['email'] === $email) {
+                    session_start();
+                    $_SESSION['usuario'] = $email;
+                    $_SESSION['tipo'] = 'ADM';
+                    header("Location: admin.php");
+                    exit;
+                } else {
+                    $erro = 'Você não é o administrador!';
+                }
+            } else {
+                // Login normal
+                session_start();
+                $_SESSION['usuario'] = $email;
+                $_SESSION['tipo'] = 'USER';
+                header("Location: dashboard.php");
+                exit;
+            }
+        }
+    } catch (PDOException $e) {
+        $erro = "Erro no banco: " . $e->getMessage();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +87,7 @@ die();
         <!-- Aqui vai sua imagem ou fundo -->
         <img src="img/cabeçabranca.png" alt="Imagem" class="side-image">
     </div>
+
     <div class="right-side">
         <div class="blob">
             <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -114,6 +163,12 @@ die();
 
                 <label>Senha:</label>
                 <input type="password" name="senha" required>
+
+ <!-- Check ADM -->
+<div class="check-adm">
+  <input type="checkbox" name="adm_check" id="adm_check">
+  <label for="adm_check">Entrar como ADM</label>
+</div>
 
                 <button type="submit">Entrar</button>
             </form>
