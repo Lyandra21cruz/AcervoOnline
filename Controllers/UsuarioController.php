@@ -10,6 +10,7 @@ class UsuarioController {
 
     public function cadastrar($nome, $email, $senha) {
         if ($this->model->cadastrar($nome, $email, $senha)) {
+            $this->model->cadastrarPerfil($nome, $email);
             header("Location: index.php?pagina=login&msg=sucesso");
             exit;
         } else {

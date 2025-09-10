@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit;
@@ -244,7 +245,7 @@ if (!isset($_SESSION['usuario'])) {
             <i class="fa-solid fa-gear"></i> Configurações
         </a>
 
-        <!-- Correção: sair pelo logout.php -->
+
         <a href="../../index.php">
             <i class="fa-solid fa-right-from-bracket"></i> Sair
         </a>
