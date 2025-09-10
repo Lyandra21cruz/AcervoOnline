@@ -25,7 +25,7 @@ class UsuarioController {
             header("Location: index.php?pagina=dashboard");
             exit;
         } else {
-            echo "E-mail ou senha incorretos!";
+            header("Location: index.php?pagina=login");
         }
     }
 
