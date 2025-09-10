@@ -3,6 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <title>Carrinho de Livros</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #livros div {
+      margin-bottom: 20px;
+    }
+    #carrinho li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+    }
+    #carrinho img {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #carrinho span {
+      flex-grow: 1;
+    }
+    button {
+      cursor: pointer;
+      padding: 4px 8px;
+      border: none;
+      border-radius: 4px;
+      background-color: #0077cc;
+      color: white;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+  </style>
 </head>
 <body>
   <h1>Loja de Livros - Aluguel</h1>
@@ -72,12 +106,12 @@
         const img = document.createElement("img");
         img.src = item.imagem;
         img.alt = item.nome;
-        img.width = 60;
+        img.width = 50;
         li.appendChild(img);
 
         // Texto
         const texto = document.createElement("span");
-        texto.textContent = ` ${item.nome} - ${item.autor} | ${item.dias} dias | R$ ${item.precoTotal.toFixed(2)} `;
+        texto.textContent = `${item.nome} - ${item.autor} | ${item.dias} dias | R$ ${item.precoTotal.toFixed(2)}`;
         li.appendChild(texto);
 
         // Botão remover

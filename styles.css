@@ -167,3 +167,11 @@ section {
     width: 80%; /* ou defina o tamanho que preferir */
     max-width: 400px;
 }
+.check-adm {
+  display: flex;             /* coloca checkbox + texto na mesma linha */
+  align-items: center;       /* centraliza verticalmente */
+  justify-content: flex-start; /* garante alinhamento à esquerda */
+  gap: 8px;                  /* espaço entre checkbox e texto */
+  margin: 10px 0;
+  font-size: 14px;
+}
