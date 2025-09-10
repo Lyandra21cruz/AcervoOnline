@@ -5,8 +5,7 @@ $erro = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $senha = $_POST['senha'] ?? '';
-var_dump($email);
-die();
+
     // Aqui você faz sua verificação real no banco
     // Exemplo fictício:
     if ($email !== 'usuario@teste.com' || $senha !== '123456') {

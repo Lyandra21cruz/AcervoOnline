@@ -21,6 +21,14 @@ class UsuarioModel {
         ]);
     }
 
+     public function cadastrarPerfil($nome, $email) {
+        $sql = "INSERT INTO perfil (nome, email) VALUES (:nome, :email)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            ":nome" => $nome,
+            ":email" => $email
+        ]);
+    }
     // Login
     public function login($email, $senha) {
         $sql = "SELECT * FROM usuarios WHERE email = :email LIMIT 1";
