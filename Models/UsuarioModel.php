@@ -41,8 +41,20 @@ class UsuarioModel {
         }
         return false;
     }
+public function loginAdm($email, $senha) {
+    $sql = "SELECT * FROM adm WHERE email_adm = :email LIMIT 1";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([":email" => $email]);
+    $adm = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Recuperar senha
+    if ($adm) {
+        // Caso 1: senha armazenada em texto puro
+        if ($senha === $adm['senha_adm']) {
+            return $adm;
+        }}
+
+    return false;
+}
     public function recuperarSenha($email, $novaSenha) {
         $hash = password_hash($novaSenha, PASSWORD_DEFAULT);
         $sql = "UPDATE usuarios SET senha = :senha WHERE email = :email";

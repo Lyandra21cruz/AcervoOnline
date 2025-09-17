@@ -231,7 +231,7 @@ if (!isset($_SESSION['usuario'])) {
             visibility: visible;
         }
 
-       .banner {
+        .banner {
             position: absolute;
             /* libera a posição */
             top: 10%;
@@ -254,7 +254,6 @@ if (!isset($_SESSION['usuario'])) {
             /* espaço entre logo e texto */
         }
 
-
         .section {
             padding: 20px;
             background: #E1D4C2;
@@ -265,50 +264,7 @@ if (!isset($_SESSION['usuario'])) {
             color: #4a2c20;
         }
 
-        .livros {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-        }
-
-        .livro {
-            flex: 0 0 auto;
-            width: 120px;
-            text-align: center;
-        }
-
-        .livro img {
-            width: 100%;
-            border-radius: 5px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .livro p {
-            margin-top: 5px;
-            font-size: 14px;
-        }
-
-        .generos {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .genero {
-            flex: 1;
-            background-color: #b08b73;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .genero:hover {
-            background-color: #8c6b55;
-        }
-
-         .logo-container {
+        .logo-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -338,9 +294,6 @@ if (!isset($_SESSION['usuario'])) {
     <header>
         <h1>AcervoOnline</h1>
         <div class="menu">
-            <a href="carrinho.php">
-                <i class="fa-solid fa-cart-shopping"></i>
-            </a>
 
             <div class="menu-icon" onclick="openMenu()">
                 <span></span>
@@ -352,14 +305,15 @@ if (!isset($_SESSION['usuario'])) {
 
     <header class="header2">
 
-     <div class="banner">
+
+        <div class="banner">
             <img src="../../img/download (12).png" alt="Logo AcervoOnline" class="logo">
             <br>
             <br>
             <br><br>
             <br>
             <br>
-            <h1 class="bem-vindo">Bem-vindo, <?php echo $_SESSION['usuario']['nome']; ?>!</h1>
+            <h1 class="bem-vindo">Bem-vindo, Adm!</h1>
 
         </div>
 
@@ -393,7 +347,7 @@ if (!isset($_SESSION['usuario'])) {
     <div id="sideMenu" class="side-menu">
         <span class="closebtn" onclick="closeMenu()">&times;</span>
 
-        <a href="perfil.php">
+        <a href="perfiladm.php">
             <i class="fa-solid fa-user"></i> Perfil
         </a>
 
@@ -408,35 +362,7 @@ if (!isset($_SESSION['usuario'])) {
     </div>
 
     <div class="section">
-        <h3>Mais lidos da Semana</h3>
-        <div class="livros">
-            <div class="livro">
-                <img src="https://m.media-amazon.com/images/I/81J+Iu6lDkL.jpg" alt="Bridgerton">
-                <p>Bridgerton</p>
-            </div>
-            <div class="livro">
-                <img src="https://m.media-amazon.com/images/I/81dHhy+Y5-L.jpg" alt="Nárnia">
-                <p>As Crônicas de Nárnia</p>
-            </div>
-            <div class="livro">
-                <img src="https://m.media-amazon.com/images/I/71rJgR1oOXL.jpg" alt="Crepúsculo">
-                <p>Saga Crepúsculo</p>
-            </div>
-            <div class="livro">
-                <img src="https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg" alt="Harry Potter">
-                <p>Harry Potter</p>
-            </div>
-        </div>
-    </div>
 
-    <div class="section">
-        <h3>Explorar por gênero</h3>
-        <div class="generos">
-            <div class="genero"><i class="fa-solid fa-heart"></i> Romance</div>
-            <div class="genero"><i class="fa-solid fa-ghost"></i> Terror</div>
-            <div class="genero"><i class="fa-solid fa-hat-wizard"></i> Fantasia</div>
-
-        </div>
     </div>
 
     <script>

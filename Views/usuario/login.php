@@ -20,83 +20,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Processa o POST na própria página
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $senha = trim($_POST['senha']);
-    $adminCheck = isset($_POST['admin']); // se check-box foi marcado
+    $email = $_POST['email'] ?? '';
+    $senha = $_POST['senha'] ?? '';
+    $checkAdm = isset($_POST['adm_check']); // checkbox marcado ou não
 
-    if ($adminCheck) {
-        // Verificação de admin
-        if ($email === "Adm.AcervoOnline@gmail.com" && $senha === "Acervo123Online") {
-            $sql = "SELECT * FROM adm WHERE email = :email AND senha = :senha LIMIT 1";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':senha', $senha);
-            $stmt->execute();
-
-            if ($stmt->rowCount() > 0) {
-                $_SESSION['usuario'] = $email;
-                $_SESSION['tipo'] = "admin";
-                header("Location: adm/adm.php"); // 👉 página de administração
-                exit;
-            } else {
-                $erro = "Credenciais inválidas para administrador.";
-            }
-        } else {
-            $erro = "Email ou senha incorretos para administrador.";
-        }
-    } else {
-        // Login normal de usuários
+    try {
         $sql = "SELECT * FROM usuarios WHERE email = :email AND senha = :senha LIMIT 1";
-        $stmt = $pdo->prepare($sql);
+        $stmt = $conn->prepare($sql);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senha);
         $stmt->execute();
 
-        if ($stmt->rowCount() > 0) {
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$usuario) {
+            $erro = 'E-mail ou senha incorretos!';
+        } else {
+            // Se checkbox ADM estiver marcado, validar na tabela adm
+            if ($checkAdm) {
+                $sqlAdm = "SELECT * FROM adm WHERE id_adm = 1 LIMIT 1";
+                $stmtAdm = $conn->prepare($sqlAdm);
+                $stmtAdm->execute();
+                $adm = $stmtAdm->fetch(PDO::FETCH_ASSOC);
+
+                if ($adm && $adm['email'] === $email) {
+                    session_start();
                     $_SESSION['usuario'] = $email;
-            $_SESSION['tipo'] = "usuario";
-            header("Location: pagina_usuario.php"); // 👉 página padrão de usuário
+                    $_SESSION['tipo'] = 'ADM';
+                    header("Location: ../adm/adm.php");
                     exit;
                 } else {
-            $erro = "Email ou senha incorretos.";
+                    $erro = 'Você não é o administrador!';
+                }
+            } else {
+                // Login normal
+                session_start();
+                $_SESSION['usuario'] = $email;
+                $_SESSION['tipo'] = 'USER';
+                header("Location: dashboard.php");
+                exit;
+            }
+        }
+    } catch (PDOException $e) {
+        $erro = "Erro no banco: " . $e->getMessage();
     }
 }
-}
-
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <!-- Fonte Lisu Bosa -->
-  <link href="https://fonts.googleapis.com/css2?family=Lisu+Bosa:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lisu+Bosa:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Login</title>
 
 </head>
+
 <body>
 
 
 
- <section class="main-section">
-    <div class="left-side">
-        <!-- Aqui vai sua imagem ou fundo -->
-        <img src="img/cabeçabranca.png" alt="Imagem" class="side-image">
-    </div>
+    <section class="main-section">
+        <div class="left-side">
+            <!-- Aqui vai sua imagem ou fundo -->
+            <img src="img/cabeçabranca.png" alt="Imagem" class="side-image">
+        </div>
 
-    <div class="right-side">
-        <div class="blob">
-            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                width="100%" id="blobSvg">
-                <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color: rgb(225, 212, 194);"></stop>
-                        <stop offset="100%" style="stop-color: rgb(167, 141, 120);"></stop>
-                    </linearGradient>
-                </defs>
-                <path fill="url(#gradient)">
-                    <animate attributeName="d" dur="10000ms" repeatCount="indefinite" values="
+        <div class="right-side">
+            <div class="blob">
+                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    width="100%" id="blobSvg">
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color: rgb(225, 212, 194);"></stop>
+                            <stop offset="100%" style="stop-color: rgb(167, 141, 120);"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#gradient)">
+                        <animate attributeName="d" dur="10000ms" repeatCount="indefinite"
+                            values="
                         M459.5,296Q441,342,416,384Q391,426,345,446Q299,466,250,465Q201,464,162,436.5Q123,409,79,381.5Q35,354,33.5,302Q32,250,32,197.5Q32,145,70.5,109.5Q109,74,152.5,44.5Q196,15,250.5,12Q305,9,348.5,40.5Q392,72,412.5,117Q433,162,455.5,206Q478,250,459.5,296Z;
 
                         M471,299Q453,348,418,382.5Q383,417,344,453.5Q305,490,250.5,488Q196,486,145.5,465.5Q95,445,60,401.5Q25,358,19.5,304Q14,250,24,198Q34,146,66.5,103.5Q99,61,147.5,36.5Q196,12,248,21Q300,30,339.5,59.5Q379,89,405.5,125.5Q432,162,460.5,206Q489,250,471,299Z;
@@ -110,22 +115,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                          M459.5,296Q441,342,416,384Q391,426,345,446Q299,466,250,465Q201,464,162,436.5Q123,409,79,381.5Q35,354,33.5,302Q32,250,32,197.5Q32,145,70.5,109.5Q109,74,152.5,44.5Q196,15,250.5,12Q305,9,348.5,40.5Q392,72,412.5,117Q433,162,455.5,206Q478,250,459.5,296Z">
 
-                    </animate>
-                </path>
-            </svg>
-        </div>
+                        </animate>
+                    </path>
+                </svg>
+            </div>
 
-         <div class="blob">
-            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                width="100%" id="blobSvg">
-                <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color: rgb(225, 212, 194);"></stop>
-                        <stop offset="100%" style="stop-color: rgb(167, 141, 120);"></stop>
-                    </linearGradient>
-                </defs>
-                <path fill="url(#gradient)">
-                    <animate attributeName="d" dur="10000ms" repeatCount="indefinite" values="
+            <div class="blob">
+                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    width="100%" id="blobSvg">
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color: rgb(225, 212, 194);"></stop>
+                            <stop offset="100%" style="stop-color: rgb(167, 141, 120);"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#gradient)">
+                        <animate attributeName="d" dur="10000ms" repeatCount="indefinite"
+                            values="
                         M459.5,296Q441,342,416,384Q391,426,345,446Q299,466,250,465Q201,464,162,436.5Q123,409,79,381.5Q35,354,33.5,302Q32,250,32,197.5Q32,145,70.5,109.5Q109,74,152.5,44.5Q196,15,250.5,12Q305,9,348.5,40.5Q392,72,412.5,117Q433,162,455.5,206Q478,250,459.5,296Z;
 
                         M471,299Q453,348,418,382.5Q383,417,344,453.5Q305,490,250.5,488Q196,486,145.5,465.5Q95,445,60,401.5Q25,358,19.5,304Q14,250,24,198Q34,146,66.5,103.5Q99,61,147.5,36.5Q196,12,248,21Q300,30,339.5,59.5Q379,89,405.5,125.5Q432,162,460.5,206Q489,250,471,299Z;
@@ -139,43 +145,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                          M459.5,296Q441,342,416,384Q391,426,345,446Q299,466,250,465Q201,464,162,436.5Q123,409,79,381.5Q35,354,33.5,302Q32,250,32,197.5Q32,145,70.5,109.5Q109,74,152.5,44.5Q196,15,250.5,12Q305,9,348.5,40.5Q392,72,412.5,117Q433,162,455.5,206Q478,250,459.5,296Z">
 
-                    </animate>
-                </path>
-            </svg>
-        </div>
-
- <div class="container">
-            <div class="title-recuperar">
-                <span>Bem-vindo ao AcervoOnline!</span>
+                        </animate>
+                    </path>
+                </svg>
             </div>
 
-            <!-- Aqui aparece a mensagem de erro, dentro da mesma página -->
-            <?php if (!empty($erro)): ?>
-                <div class="erro"><?= $erro ?></div>
-            <?php endif; ?>
+            <div class="container">
+                <div class="title-recuperar">
+                    <span>Bem-vindo ao AcervoOnline!</span>
+                </div>
 
-            <form id="formLogin" method="post" action="">
-                <label>Email:</label>
-                <input type="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+                <!-- Aqui aparece a mensagem de erro, dentro da mesma página -->
+                <?php if (!empty($erro)): ?>
+                    <p style="color: red;"><?= $erro ?></p>
+                <?php endif; ?>
+                <form id="formLogin" method="post" action="">
+                    <label>Email:</label>
+                    <input type="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
 
-                <label>Senha:</label>
-                <input type="password" name="senha" required>
+                    <label>Senha:</label>
+                    <input type="password" name="senha" required>
 
- <!-- Check ADM -->
-<div class="check-adm">
-  <input type="checkbox" name="adm_check" id="adm_check">
-  <label for="adm_check">Entrar como ADM</label>
-</div>
+                  
+                    <button type="submit">Entrar</button>
+                </form>
 
-                <button type="submit">Entrar</button>
-            </form>
-
-            <div class="links-login">
-                <a href="index.php?pagina=cadastro">Cadastre-se</a> | 
-                <a href="index.php?pagina=recuperar">Esqueci minha senha</a>
+                <div class="links-login">
+                    <a href="index.php?pagina=cadastro">Cadastre-se</a> |
+                    <a href="index.php?pagina=recuperar">Esqueci minha senha</a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </body>
+
 </html>

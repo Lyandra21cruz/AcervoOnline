@@ -19,6 +19,16 @@ class UsuarioController {
     }
 
     public function login($email, $senha) {
+        // Primeiro tenta login como Administrador
+        $adm = $this->model->loginAdm($email, $senha);
+        if ($adm) {
+            session_start();
+            $_SESSION['adm'] = $adm;
+            header("Location: Views/adm/adm.php");
+            exit;
+        }
+
+        // Se não for ADM, tenta login como Usuário
         $usuario = $this->model->login($email, $senha);
         if ($usuario) {
             session_start();
@@ -26,22 +36,22 @@ class UsuarioController {
             header("Location: index.php?pagina=dashboard");
             exit;
         } else {
-            header("Location: index.php?pagina=login");
+            header("Location: index.php?pagina=login&erro=1");
+            exit;
         }
     }
 
- public function recuperar($email, $novaSenha, $confirmarSenha) {
-    if ($novaSenha !== $confirmarSenha) {
-        echo "As senhas não conferem!";
-        return;
-    }
+    public function recuperar($email, $novaSenha, $confirmarSenha) {
+        if ($novaSenha !== $confirmarSenha) {
+            echo "As senhas não conferem!";
+            return;
+        }
 
-    if ($this->model->recuperarSenha($email, $novaSenha)) {
-        header("Location: index.php?pagina=login&msg=senha_alterada");
-        exit;
-    } else {
-        echo "Erro ao recuperar senha!";
+        if ($this->model->recuperarSenha($email, $novaSenha)) {
+            header("Location: index.php?pagina=login&msg=senha_alterada");
+            exit;
+        } else {
+            echo "Erro ao recuperar senha!";
+        }
     }
-}
-
 }

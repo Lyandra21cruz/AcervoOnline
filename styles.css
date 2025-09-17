@@ -168,10 +168,19 @@ section {
     max-width: 400px;
 }
 .check-adm {
-  display: flex;             /* coloca checkbox + texto na mesma linha */
-  align-items: center;       /* centraliza verticalmente */
-  justify-content: flex-start; /* garante alinhamento à esquerda */
-  gap: 8px;                  /* espaço entre checkbox e texto */
+  display: inline-flex;   /* checkbox + label lado a lado */
+  align-items: center;    /* centraliza verticalmente */
+  gap: 4px;               /* espaço mínimo entre eles */
   margin: 10px 0;
-  font-size: 14px;
+}
+
+.check-adm input[type="checkbox"] {
+  margin: 0;              /* remove espaçamento extra do navegador */
+}
+
+.check-adm label {
+  display: inline;        /* garante que não vire bloco */
+  white-space: nowrap;    /* não deixa quebrar linha */
+  text-align: left;       /* força alinhamento do texto */
+  margin: 0;              /* tira espaçamentos herdados */
 }
