@@ -20,51 +20,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Processa o POST na própria página
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $senha = $_POST['senha'] ?? '';
-    $checkAdm = isset($_POST['adm_check']); // checkbox marcado ou não
+    $email = trim($_POST['email']);
+    $senha = trim($_POST['senha']);
+    $adminCheck = isset($_POST['admin']); // se check-box foi marcado
 
-    try {
+    if ($adminCheck) {
+        // Verificação de admin
+        if ($email === "Adm.AcervoOnline@gmail.com" && $senha === "Acervo123Online") {
+            $sql = "SELECT * FROM adm WHERE email = :email AND senha = :senha LIMIT 1";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':senha', $senha);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $_SESSION['usuario'] = $email;
+                $_SESSION['tipo'] = "admin";
+                header("Location: adm/adm.php"); // 👉 página de administração
+                exit;
+            } else {
+                $erro = "Credenciais inválidas para administrador.";
+            }
+        } else {
+            $erro = "Email ou senha incorretos para administrador.";
+        }
+    } else {
+        // Login normal de usuários
         $sql = "SELECT * FROM usuarios WHERE email = :email AND senha = :senha LIMIT 1";
-        $stmt = $conn->prepare($sql);
+        $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senha);
         $stmt->execute();
 
-        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$usuario) {
-            $erro = 'E-mail ou senha incorretos!';
-        } else {
-            // Se checkbox ADM estiver marcado, validar na tabela adm
-            if ($checkAdm) {
-                $sqlAdm = "SELECT * FROM adm WHERE id_adm = 1 LIMIT 1";
-                $stmtAdm = $conn->prepare($sqlAdm);
-                $stmtAdm->execute();
-                $adm = $stmtAdm->fetch(PDO::FETCH_ASSOC);
-
-                if ($adm && $adm['email'] === $email) {
-                    session_start();
+        if ($stmt->rowCount() > 0) {
                     $_SESSION['usuario'] = $email;
-                    $_SESSION['tipo'] = 'ADM';
-                    header("Location: admin.php");
+            $_SESSION['tipo'] = "usuario";
+            header("Location: pagina_usuario.php"); // 👉 página padrão de usuário
                     exit;
                 } else {
-                    $erro = 'Você não é o administrador!';
-                }
-            } else {
-                // Login normal
-                session_start();
-                $_SESSION['usuario'] = $email;
-                $_SESSION['tipo'] = 'USER';
-                header("Location: dashboard.php");
-                exit;
-            }
-        }
-    } catch (PDOException $e) {
-        $erro = "Erro no banco: " . $e->getMessage();
+            $erro = "Email ou senha incorretos.";
     }
 }
+}
+
 ?>
 
 <!DOCTYPE html>
