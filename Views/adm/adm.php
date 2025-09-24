@@ -286,6 +286,227 @@ if (!isset($_SESSION['usuario'])) {
             font-weight: bold;
             background: transparent;
         }
+        .cards-container{
+  /* largura grande, mas responsiva; ajuste min/max conforme precisar */
+  width: min(1200px, 96vw);
+  /* altura para que os cards fiquem grandes, mas sem ocupar 1 card por tela inteira */
+  height: 70vh;
+  margin: 24px auto; /* centraliza o bloco na página (não muda o body) */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr; /* top row + bottom row */
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* terceiro card ocupa as duas colunas (fica embaixo, largura total) */
+.cards-container .card:nth-child(3){
+  grid-column: 1 / -1;
+}
+
+/* card base */
+.card {
+  --bg: #a58a7a;
+  --text: #3b2419;
+  position: relative;
+  border-radius: 6px;
+  overflow: visible;
+  display: flex;
+  align-items: flex-start;
+  padding: 28px;
+  min-height: 36%;
+  background: var(--bg);   /* <- ESTA LINHA garante a cor */
+  z-index: 1;              /* mantém o fundo abaixo do SVG e do conteúdo */
+}
+
+/* camadas: ::before = faixa animada (gira), ::after = fundo interior */
+.card::before{
+  content: "";
+  position: absolute;
+  inset: -6px; /* fica um pouco para fora para desenhar a linha */
+  z-index: 1;
+  border-radius: 6px;
+  pointer-events: none;
+  background: conic-gradient(from 0deg,
+    transparent 0deg 240deg,
+    rgba(255,255,255,0.95) 240deg 300deg,
+    transparent 300deg 360deg);
+  opacity: 0;
+  transform: rotate(0deg);
+  transition: opacity .12s ease;
+  filter: drop-shadow(0 0 3px rgba(255,255,255,0.35));
+}
+
+.card::after{
+  /* camada interna que forma o "preenchimento" do card,
+     deixando a faixa externa (::before) visível ao redor */
+  content: "";
+  position: absolute;
+  inset: 6px; /* cria a "borda" visível ao redor */
+  z-index: 2;
+  background: var(--bg);
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* conteúdo do card acima de tudo */
+.card-inner{
+  position: relative;
+  z-index: 3;
+  color: var(--text);
+  max-width: 640px; /* limita a largura do texto para ficar parecido com seu design */
+}
+
+/* textos */
+.card-inner h3{
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.75);
+}
+
+.card-inner p{
+  margin: 0 0 18px 0;
+  font-size: 14px;
+  color: rgba(0,0,0,0.45);
+  line-height: 1.35;
+}
+
+/* call-to-action (link com seta) */
+.card-inner .cta{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+}
+
+/* seta */
+.card-inner .cta::after{
+  content: "→";
+  transition: transform .28s ease;
+  color: var(--text);
+}
+
+/* hover: seta anda pra frente e brilho varre o texto */
+.card:hover .cta::after{
+  transform: translateX(6px);
+}
+
+/* brilho que varre o texto (ativo no hover do card) */
+.card:hover .card-inner .cta{
+  /* cria o texto "recortado" por um gradiente que se move */
+  background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.35), rgba(255,255,255,0.95));
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineMove .7s forwards;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.45));
+}
+
+/* ativa a faixa animada apenas no hover */
+.card:hover::before{
+  opacity: 1;
+  animation: spin 1.6s linear infinite;
+}
+
+/* animações */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shineMove {
+  from { background-position: 0% 0; }
+  to   { background-position: 100% 0; }
+}
+
+/* cores finais (caso queira trocar inline, remova estas) */
+.card.alugueis{ --bg:#a58a7a; --text:#3b2419; }
+.card.recibos { --bg:#744840; --text:#3b2419; }
+.card.livros  { --bg:#2d1a0f; --text:#6b4d3f; }
+
+/* ---- Desativa pseudo anteriores caso existam (override) ---- */
+.card::before,
+.card::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* ---- Estilos e animação do SVG border ---- */
+.card {
+  position: relative;
+  overflow: visible; /* preciso para o SVG "sair" um pouco do box */
+}
+
+/* SVG que desenha o contorno */
+.card .card-border{
+    position: absolute;
+  inset: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  z-index: 2; /* ainda fica acima do fundo, mas atrás do texto */
+  pointer-events: none;
+}
+
+/* estilo do traço */
+.card .card-border rect{
+  fill: transparent;
+  stroke: #ffffff;
+  stroke-width: 2.4;         /* espessura da linha */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* dash maior que o perímetro para garantir continuidade quando escalado */
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.55));
+  transition: opacity .14s linear;
+}
+
+/* Ao passar o mouse: anima o traço e faz piscar (opacidade) */
+.card:hover .card-border rect{
+  opacity: 1;
+  /* animação 1: desloca o dash => cria o movimento ao longo do contorno */
+  animation: cardDash 1.6s linear infinite;
+  /* animação 2: piscar / pulso de brilho */
+  animation-name: cardDash, cardPulse;
+  animation-duration: 1.6s, 1.6s;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+/* anima o dash (faz parecer que a linha percorre o contorno) */
+@keyframes cardDash {
+  from { stroke-dashoffset: 420; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* pulso de opacidade (pisca suave) */
+@keyframes cardPulse {
+  0%   { opacity: 1; }
+  40%  { opacity: 0.45; }
+  70%  { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+/* garante que o conteúdo do card fique acima do SVG */
+.card-inner { position: relative; z-index: 3; }
+
+/* Mantém o efeito de texto brilhante na CTA (se você já tem essa parte, deixe como está) */
+.card:hover .cta{
+  background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.35), rgba(255,255,255,0.95));
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineMove .7s forwards;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.45));
+}
+@keyframes shineMove { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+
     </style>
 </head>
 
@@ -362,6 +583,40 @@ if (!isset($_SESSION['usuario'])) {
     </div>
 
     <div class="section">
+    <div class="cards-container">
+  <div class="card alugueis" style="--bg:#a58a7a; --text:#3b2419;">
+  <svg class="card-border" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="1" y="1" width="98" height="98" rx="4" ry="4" />
+</svg>
+<div class="card-inner">
+  <h3 style="color: #fff; font-size: 40px;">Aluguéis</h3>
+  <p style="color: #6E473B; font-size: 25px;">Gerenciar os aluguéis de livros</p>
+  <a href="alugueis.php" class="cta">Ver Aluguéis</a>
+</div>
+  </div>
+
+  <div class="card recibos" style="--bg:#744840; --text:#3b2419;">
+  <svg class="card-border" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="1" y="1" width="98" height="98" rx="4" ry="4" />
+</svg>
+    <div class="card-inner">
+      <h3 style="color: #fff; font-size: 40px;">Recibos</h3>
+      <p style="color: #A78D78; font-size: 25px;">Gerenciar Recibos de Aluguel</p>
+      <a href="recebidos.php" class="cta">Ver Recibos</a>
+    </div>
+  </div>
+
+  <div class="card livros" style="--bg:#2d1a0f; --text:#6b4d3f;">
+  <svg class="card-border" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="1" y="1" width="98" height="98" rx="4" ry="4" />
+</svg>
+    <div class="card-inner">
+      <h3 style="color: #fff; font-size: 40px;">Livros</h3>
+      <p style="color: #A78D78; font-size: 25px;">Cadastrar e atualizar livros</p>
+      <a href="cadastrolivros.php" class="cta">Cadastrar livros</a>
+    </div>
+  </div>
+</div>
 
     </div>
 
