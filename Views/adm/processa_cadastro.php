@@ -24,8 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "sinopse" => $_POST['sinopse'] ?? null,
         "custo_aluguel" => $_POST['custo_aluguel'] ?? null,
         "tempo_aluguel" => $_POST['tempo_aluguel'] ?? null,
-        "imagem" => $imagem_nome
+        "imagem" => $imagem_nome,
+        "categoria" => $_POST['categoria'] ?? null
     ];
+
+
+    if ($ok) {
+        // Redireciona para a página da categoria
+        header("Location: categoria.php?cat=" . urlencode($categoria));
+        exit;
+    } else {
+        echo "erro";
+    }
 
     if ($controller->cadastrarLivro($dados)) {
         echo "<p>✅ Livro cadastrado com sucesso!</p>";

@@ -13,11 +13,12 @@ class Livro {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
     public function cadastrar($dados) {
-        $sql = "INSERT INTO livros (titulo, autor, sinopse, custo_aluguel, imagem, tempo_aluguel) 
-                VALUES (:titulo, :autor, :sinopse, :custo_aluguel, :imagem, :tempo_aluguel)";
+        $sql = "INSERT INTO livros (titulo, autor, categoria, sinopse, custo_aluguel, imagem, tempo_aluguel) 
+                VALUES (:titulo, :autor, :categoria, :sinopse, :custo_aluguel, :imagem, :tempo_aluguel)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":titulo", $dados['titulo']);
         $stmt->bindParam(":autor", $dados['autor']);
+        $stmt->bindParam(":categoria", $dados['categoria']);
         $stmt->bindParam(":sinopse", $dados['sinopse']);
         $stmt->bindParam(":custo_aluguel", $dados['custo_aluguel']);
         $stmt->bindParam(":imagem", $dados['imagem']);

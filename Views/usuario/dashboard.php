@@ -231,7 +231,7 @@ if (!isset($_SESSION['usuario'])) {
             visibility: visible;
         }
 
-       .banner {
+        .banner {
             position: absolute;
             /* libera a posição */
             top: 10%;
@@ -287,28 +287,128 @@ if (!isset($_SESSION['usuario'])) {
             margin-top: 5px;
             font-size: 14px;
         }
+:root{
+    --gap: 24px;
+  }
 
-        .generos {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-        }
+  /* container externo: esconde tudo que estiver além da área (horizontalmente) */
+  .carrossel-container{
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* importante para mascarar os itens que saem à esquerda/direita */
+    padding: 32px 56px;
+    box-sizing: border-box;
+    background: ##E1D4C2;
+  }
 
-        .genero {
-            flex: 1;
-            background-color: #b08b73;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+  /* elemento que faz o scroll: precisa ser scrollable no eixo X */
+  .carrossel{
+    display: flex;
+    gap: var(--gap);
+    overflow-x: auto;               /* <-- permite scrollBy e scroll natural */
+    overflow-y: visible;            /* evitar cortar sombras verticais se precisarem aparecer */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;            /* evita cortar sombra inferior */
+    box-sizing: border-box;
+  }
 
-        .genero:hover {
-            background-color: #8c6b55;
-        }
+  /* esconder barra de rolagem (visual) */
+  .carrossel::-webkit-scrollbar{ height: 8px; display: none; } /* chrome/safari */
+  .carrossel { scrollbar-width: none; -ms-overflow-style: none; } /* firefox/ie */
 
-         .logo-container {
+  /* cada item (só o wrapper externo, não escala ele) */
+  .genero{
+    flex: 0 0 calc(33.333% - (var(--gap) * 2 / 3)); /* 3 por vez */
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* cartão interno que realmente tem borda, padding e será escalado no hover.
+     mantendo este wrapper para não alterar a largura do flex item ao escalar */
+  .genero-inner{
+    width: 100%;
+    height: 220px; /* ajuste conforme seu layout */
+    background: #A78D78;
+    border-radius: 14px;
+    padding: 28px 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms;
+    transform-origin: center center;
+    will-change: transform;
+    position: relative;
+  }
+
+  .genero i{
+    font-size: 44px;
+    margin-bottom: 12px;
+    color: var(--primary);
+  }
+
+  .genero span{
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    color: #fff;
+  }
+
+.genero:hover .genero-inner,
+.genero:focus-within .genero-inner {
+  background: #4a2c20;
+}
+
+.genero:hover .genero-inner i,
+.genero:focus-within .genero-inner i {
+  color: #b08b73;
+}
+
+.genero:hover .genero-inner span,
+.genero:focus-within .genero-inner span {
+  color: #b08b73;
+}
+
+  /* botões */
+  .btn-nav{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary);
+    border: none;
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 40;
+    background-color: #4a2c20;
+  }
+
+  .btn-nav.left{ left: 12px; }
+  .btn-nav.right{ right: 12px; }
+
+  .btn-nav:active{ transform: translateY(-50%) scale(.98); }
+  .btn-nav i{ font-size: 16px; }
+
+  /* responsividade: reduzir espaço e tamanho em telas pequenas */
+  @media (max-width: 900px){
+    .genero { flex: 0 0 calc(50% - (var(--gap)/2)); }
+    .genero-inner{ height: 180px; padding: 20px; }
+  }
+
+  @media (max-width: 520px){
+    .genero { flex: 0 0 calc(100% - var(--gap)); }
+    .carrossel-container { padding: 20px; }
+  }
+        .logo-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -352,7 +452,7 @@ if (!isset($_SESSION['usuario'])) {
 
     <header class="header2">
 
-     <div class="banner">
+        <div class="banner">
             <img src="../../img/download (12).png" alt="Logo AcervoOnline" class="logo">
             <br>
             <br>
@@ -431,12 +531,138 @@ if (!isset($_SESSION['usuario'])) {
 
     <div class="section">
         <h3>Explorar por gênero</h3>
-        <div class="generos">
-            <div class="genero"><i class="fa-solid fa-heart"></i> Romance</div>
-            <div class="genero"><i class="fa-solid fa-ghost"></i> Terror</div>
-            <div class="genero"><i class="fa-solid fa-hat-wizard"></i> Fantasia</div>
+     <div class="carrossel-container">
+  <button class="btn-nav left" aria-label="Anterior" onclick="scrollCarousel(-1)">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
 
-        </div>
+  <div class="carrossel" id="carrossel">
+    <a href="romance.php" class="genero">
+      <div class="genero-inner">
+      <i class="fa-solid fa-heart"></i>
+      <span>Romance</span>
+      </div>
+    </a>
+
+
+    <a href="aventura.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-mountain-sun"></i>
+      <span>Aventura</span>
+      </div>
+    </a>
+
+
+    <a href="fantasia.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-hat-wizard"></i>
+      <span>Fantasia</span>
+       </div>
+    </a>
+
+
+    <a href="biografia.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-book-open-reader"></i>
+      <span>Biografia</span>
+      </div>
+    </a>
+
+
+    <a href="terror.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-ghost"></i>
+      <span>Terror</span>
+      </div>
+    </a>
+
+
+    <a href="suspense.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-user-secret"></i>
+      <span>Suspense</span>
+       </div>
+    </a>
+
+
+    <a href="ficcao-cientifica.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-rocket"></i>
+      <span>Ficção Científica</span>
+      </div>
+    </a>
+
+
+    <a href="religioso.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-church"></i>
+      <span>Religioso</span>
+      </div>
+    </a>
+
+
+    <a href="infantil.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-child"></i>
+      <span>Infantil</span>
+      </div>
+    </a>
+
+
+    <a href="academico.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>Acadêmico</span>
+      </div>
+    </a>
+
+
+    <a href="historia.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-landmark"></i>
+      <span>História</span>
+      </div>
+    </a>
+
+
+    <a href="poesia.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-feather"></i>
+      <span>Poesia</span>
+       </div>
+    </a>
+
+
+    <a href="classicos.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-book-open"></i>
+      <span>Clássicos</span>
+      </div>
+    </a>
+
+
+    <a href="hq.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-dragon"></i>
+      <span>HQ / Mangá</span>
+      </div>
+    </a>
+
+
+    <a href="colecao.php" class="genero">
+         <div class="genero-inner">
+      <i class="fa-solid fa-layer-group"></i>
+      <span>Coleções</span>
+      </div>
+    </a>
+  </div>
+
+  <button class="btn-nav right" aria-label="Próximo" onclick="scrollCarousel(1)">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+</div>
+
+
     </div>
 
     <script>
@@ -448,6 +674,52 @@ if (!isset($_SESSION['usuario'])) {
             document.getElementById("sideMenu").style.width = "0";
             document.getElementById("overlay").classList.remove("active");
         }
+
+ (function(){
+    const carrossel = document.getElementById('carrossel');
+
+    function getGap(pxFallback = 24){
+      const style = getComputedStyle(carrossel);
+      const g = parseFloat(style.gap || style.columnGap || style.getPropertyValue('--gap')) || pxFallback;
+      return g;
+    }
+
+    function scrollCarousel(direction){
+      const firstItem = carrossel.querySelector('.genero');
+      if(!firstItem) return;
+
+      const gap = getGap();
+      const step = Math.round(firstItem.getBoundingClientRect().width + gap);
+      
+      // posição antes do scroll
+      const maxScroll = carrossel.scrollWidth - carrossel.clientWidth;
+      
+      if(direction > 0){ // próximo
+        if(carrossel.scrollLeft + step >= maxScroll){
+          // chegou no fim, volta pro início
+          carrossel.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          carrossel.scrollBy({ left: step, behavior: 'smooth' });
+        }
+      } else { // anterior
+        if(carrossel.scrollLeft - step <= 0){
+          // chegou no início, vai pro fim
+          carrossel.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        } else {
+          carrossel.scrollBy({ left: -step, behavior: 'smooth' });
+        }
+      }
+    }
+
+    window.scrollCarousel = scrollCarousel;
+
+    document.addEventListener('keydown', (e) => {
+      if(document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+      if(e.key === 'ArrowRight') scrollCarousel(1);
+      if(e.key === 'ArrowLeft') scrollCarousel(-1);
+    });
+
+})();
     </script>
 
 </body>

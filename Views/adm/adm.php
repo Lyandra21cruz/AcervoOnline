@@ -613,7 +613,7 @@ if (!isset($_SESSION['usuario'])) {
     <div class="card-inner">
       <h3 style="color: #fff; font-size: 40px;">Livros</h3>
       <p style="color: #A78D78; font-size: 25px;">Cadastrar e atualizar livros</p>
-      <a href="cadastrolivros.php" class="cta">Cadastrar livros</a>
+      <a href="cadastrar_Livro.php" class="cta">Cadastrar livros</a>
     </div>
   </div>
 </div>
