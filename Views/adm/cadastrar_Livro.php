@@ -144,11 +144,17 @@
                     <option value="biografia">Biografia</option>
                     <option value="terror">Terror</option>
                     <option value="suspense">Suspense</option>
-                    <option value="outros">Ficção Cientifica</option>
-                    <option value="romance">Religioso</option>
-                    <option value="aventura">Infantil</option>
-                    <option value="fantasia">Académico</option>
-                    <option value="fantasia">Biografia</option>
+                    <option value="cientifica">Ficção Cientifica</option>
+                    <option value="religioso">Religioso</option>
+                    <option value="infantil">Infantil</option>
+                    <option value="academico">Académico</option>
+                    <option value="biografia">Biografia</option>
+                    <option value="historia">Historia</option>
+                    <option value="poesia">Poesia</option>
+                    <option value="classico">Clássicos da Literatura</option>
+                    <option value="hq">HQ/Mangá</option>
+                    <option value="colecao">Coleções</option>
+
                 </select>
             </div>
 

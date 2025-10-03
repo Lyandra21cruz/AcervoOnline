@@ -537,7 +537,7 @@ if (!isset($_SESSION['usuario'])) {
   </button>
 
   <div class="carrossel" id="carrossel">
-    <a href="romance.php" class="genero">
+    <a href="../livros/romance.php" class="genero">
       <div class="genero-inner">
       <i class="fa-solid fa-heart"></i>
       <span>Romance</span>
@@ -545,7 +545,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="aventura.php" class="genero">
+    <a href="../livros/aventura.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-mountain-sun"></i>
       <span>Aventura</span>
@@ -553,7 +553,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="fantasia.php" class="genero">
+    <a href="../livros/fantasia.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-hat-wizard"></i>
       <span>Fantasia</span>
@@ -561,7 +561,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="biografia.php" class="genero">
+    <a href="../livros/biografia.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-book-open-reader"></i>
       <span>Biografia</span>
@@ -569,7 +569,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="terror.php" class="genero">
+    <a href="../livros/terror.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-ghost"></i>
       <span>Terror</span>
@@ -577,7 +577,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="suspense.php" class="genero">
+    <a href="../livros/suspense.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-user-secret"></i>
       <span>Suspense</span>
@@ -585,7 +585,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="ficcao-cientifica.php" class="genero">
+    <a href="../livros/cientifica.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-rocket"></i>
       <span>Ficção Científica</span>
@@ -593,7 +593,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="religioso.php" class="genero">
+    <a href="../livros/religioso.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-church"></i>
       <span>Religioso</span>
@@ -601,7 +601,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="infantil.php" class="genero">
+    <a href="../livros/infantil.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-child"></i>
       <span>Infantil</span>
@@ -609,7 +609,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="academico.php" class="genero">
+    <a href="../livros/academico.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-graduation-cap"></i>
       <span>Acadêmico</span>
@@ -617,7 +617,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="historia.php" class="genero">
+    <a href="../livros/historia.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-landmark"></i>
       <span>História</span>
@@ -625,7 +625,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="poesia.php" class="genero">
+    <a href="../livros/poesia.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-feather"></i>
       <span>Poesia</span>
@@ -633,7 +633,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="classicos.php" class="genero">
+    <a href="../livros/classicos.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-book-open"></i>
       <span>Clássicos</span>
@@ -641,7 +641,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="hq.php" class="genero">
+    <a href="../livros/hq.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-dragon"></i>
       <span>HQ / Mangá</span>
@@ -649,7 +649,7 @@ if (!isset($_SESSION['usuario'])) {
     </a>
 
 
-    <a href="colecao.php" class="genero">
+    <a href="../livros/colecao.php" class="genero">
          <div class="genero-inner">
       <i class="fa-solid fa-layer-group"></i>
       <span>Coleções</span>
