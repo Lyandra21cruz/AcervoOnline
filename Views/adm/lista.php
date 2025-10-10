@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
    body {
-  background-color: #e9dcc3;
+  background-color: #E1D4C2;
   font-family: 'Georgia', serif;
   margin: 0;
   padding: 0;
