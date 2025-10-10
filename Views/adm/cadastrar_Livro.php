@@ -164,14 +164,20 @@
             </div>
 
             <div class="form-group">
-                <label for="custo_aluguel">Custo do Aluguel (R$)</label>
+                <label for="custo_aluguel">Custo (R$)</label>
                 <input type="number" step="0.01" id="custo_aluguel" name="custo_aluguel" required>
             </div>
 
-            <div class="form-group">
-                <label for="tempo_aluguel">Tempo de Aluguel (dias)</label>
-                <input type="number" id="tempo_aluguel" name="tempo_aluguel" required>
-            </div>
+           <div class="form-group">
+   <label>
+        <input type="checkbox" id="possui_pdf"> Possui PDF?
+    </label>
+
+    <!-- Campo de upload do PDF (escondido por padrão) -->
+    <div id="upload_pdf" style="display: none;">
+        <label for="arquivo_pdf">Arquivo PDF</label>
+        <input type="file" name="arquivo_pdf" id="arquivo_pdf" accept="application/pdf">
+    </div>
 
             <div class="form-group">
                 <label for="imagem">Imagem do Livro (Capa)</label>
@@ -186,32 +192,51 @@
     </div>
 
     <script>
-        document.getElementById("cadastroForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Impede o reload da página
+    // Mostra/esconde o campo de PDF
+    document.getElementById("possui_pdf").addEventListener("change", function() {
+        const pdfDiv = document.getElementById("upload_pdf");
+        if (this.checked) {
+            pdfDiv.style.display = "block";
+        } else {
+            pdfDiv.style.display = "none";
+            document.getElementById("arquivo_pdf").value = ""; // limpa se desmarcar
+        }
+    });
 
-            let formData = new FormData(this);
+    // Envio do formulário
+    document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Impede o reload da página
 
-            fetch("processa_cadastro.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                let msgDiv = document.getElementById("mensagem");
-                if (data.includes("sucesso")) {
-                    msgDiv.textContent = "✅ Livro cadastrado com sucesso!";
-                    msgDiv.className = "mensagem sucesso";
-                    document.getElementById("cadastroForm").reset(); // limpa o form
-                } else {
-                    msgDiv.textContent = "❌ Erro ao cadastrar o livro!";
-                    msgDiv.className = "mensagem erro";
-                }
-            })
-            .catch(error => {
-                document.getElementById("mensagem").textContent = "⚠️ Erro no envio!";
-                document.getElementById("mensagem").className = "mensagem erro";
-            });
+        // Criar o objeto FormData com todos os campos do formulário
+        let formData = new FormData(this);
+
+        fetch("processa_cadastro.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            let msgDiv = document.getElementById("mensagem");
+            
+            if (data.includes("sucesso")) {
+                msgDiv.textContent = "✅ Livro cadastrado com sucesso!";
+                msgDiv.className = "mensagem sucesso";
+
+                // limpa o form
+                document.getElementById("cadastroForm").reset(); 
+                document.getElementById("upload_pdf").style.display = "none"; 
+            } else {
+                msgDiv.textContent = "❌ Erro ao cadastrar o livro!";
+                msgDiv.className = "mensagem erro";
+            }
+        })
+        .catch(error => {
+            document.getElementById("mensagem").textContent = "⚠️ Erro no envio!";
+            document.getElementById("mensagem").className = "mensagem erro";
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>

@@ -568,10 +568,6 @@ if (!isset($_SESSION['usuario'])) {
     <div id="sideMenu" class="side-menu">
         <span class="closebtn" onclick="closeMenu()">&times;</span>
 
-        <a href="perfiladm.php">
-            <i class="fa-solid fa-user"></i> Perfil
-        </a>
-
         <a href="configuracoes.php">
             <i class="fa-solid fa-gear"></i> Configurações
         </a>
@@ -589,9 +585,9 @@ if (!isset($_SESSION['usuario'])) {
   <rect x="1" y="1" width="98" height="98" rx="4" ry="4" />
 </svg>
 <div class="card-inner">
-  <h3 style="color: #fff; font-size: 40px;">Aluguéis</h3>
-  <p style="color: #6E473B; font-size: 25px;">Gerenciar os aluguéis de livros</p>
-  <a href="alugueis.php" class="cta">Ver Aluguéis</a>
+  <h3 style="color: #fff; font-size: 40px;">Livros</h3>
+  <p style="color: #6E473B; font-size: 25px;">Gerenciar os livros existentes</p>
+  <a href="lista.php" class="cta">Ver Livros</a>
 </div>
   </div>
 
@@ -601,7 +597,7 @@ if (!isset($_SESSION['usuario'])) {
 </svg>
     <div class="card-inner">
       <h3 style="color: #fff; font-size: 40px;">Recibos</h3>
-      <p style="color: #A78D78; font-size: 25px;">Gerenciar Recibos de Aluguel</p>
+      <p style="color: #A78D78; font-size: 25px;">Gerenciar Recibos</p>
       <a href="recebidos.php" class="cta">Ver Recibos</a>
     </div>
   </div>
@@ -612,7 +608,7 @@ if (!isset($_SESSION['usuario'])) {
 </svg>
     <div class="card-inner">
       <h3 style="color: #fff; font-size: 40px;">Livros</h3>
-      <p style="color: #A78D78; font-size: 25px;">Cadastrar e atualizar livros</p>
+      <p style="color: #A78D78; font-size: 25px;">Cadastrar livros</p>
       <a href="cadastrar_Livro.php" class="cta">Cadastrar livros</a>
     </div>
   </div>

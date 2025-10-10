@@ -1,23 +1,18 @@
 <?php
-require_once __DIR__ . "/../../config/conexao.php";
-
+require_once __DIR__ . '/../../config/conexao.php';
 $conn = Conexao::conectar();
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"])) {
-    $id = (int) $_POST["id"];
-
-    $sql = "SELECT id_livro, titulo, autor, sinopse, imagem, custo_aluguel, tempo_aluguel 
-            FROM livros WHERE id_livro = :id";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-    $stmt->execute();
-    $livro = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($livro) {
-        echo json_encode($livro, JSON_UNESCAPED_UNICODE);
-    } else {
-        echo json_encode(["erro" => "Livro não encontrado"]);
-    }
+if (!isset($_POST['id'])) {
+    echo json_encode(['erro' => 'ID não informado']);
     exit;
 }
-echo json_encode(["erro" => "Requisição inválida"]);
+
+$stmt = $conn->prepare("SELECT * FROM livros WHERE id_livro = ?");
+$stmt->execute([$_POST['id']]);
+$livro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($livro) {
+    echo json_encode($livro);
+} else {
+    echo json_encode(['erro' => 'Livro não encontrado']);
+}

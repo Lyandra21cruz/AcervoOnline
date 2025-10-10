@@ -497,11 +497,6 @@ if (!isset($_SESSION['usuario'])) {
             <i class="fa-solid fa-user"></i> Perfil
         </a>
 
-        <a href="configuracoes.php">
-            <i class="fa-solid fa-gear"></i> Configurações
-        </a>
-
-
         <a href="../../index.php">
             <i class="fa-solid fa-right-from-bracket"></i> Sair
         </a>

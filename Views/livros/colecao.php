@@ -261,7 +261,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="javascript:history.back()" class="voltar">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <h1 class="page-title">HQ / Mangás ִֶָ𓂃 ࣪˖ ִֶָ📚་༘࿐</h1>
+            <h1 class="page-title">Coleções ִֶָ𓂃 ࣪˖ ִֶָ📚་༘࿐</h1>
             <p class="page-subtitle">"Leitura Sem Fim. Comprometa-se com uma saga completa e viva cada capítulo."</p>
         </header>
         <br><br><br><br>
@@ -299,8 +299,8 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <h2 id="detalhe-titulo"></h2>
                 <p><strong>Autor:</strong> <span id="detalhe-autor"></span></p>
                 <p><strong>Sinopse:</strong> <span id="detalhe-sinopse"></span></p>
+                  <p><strong>Pdf:</strong> <span id="possui_pdf"></span></p>
                 <p><strong>Custo Aluguel:</strong> R$ <span id="detalhe-custo"></span></p>
-                <p><strong>Tempo Aluguel:</strong> <span id="detalhe-tempo"></span> dias</p>
                 <button class="btn-carrinho">Adicionar ao Carrinho</button>
             </div>
         </div>
@@ -311,50 +311,44 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // Abrir modal ao clicar no livro
+    const modal = document.getElementById("modal-detalhes");
+    const fechar = document.querySelector(".fechar");
+
     document.querySelectorAll(".livro a").forEach(link => {
-        link.addEventListener("click", function(e) {
-            e.preventDefault();
-            const id = this.getAttribute("href").split("=")[1];
+    link.addEventListener("click", function(e) {
+        e.preventDefault();
 
-            fetch("detalhes.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: "id=" + id
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.erro) {
-                    alert(data.erro);
-                    return;
-                }
+        const livroId = new URL(this.href).searchParams.get("id");
 
-                document.getElementById("detalhe-img").src = "../../uploads/" + data.imagem;
-                document.getElementById("detalhe-img").alt = data.titulo;
-                document.getElementById("detalhe-titulo").innerText = data.titulo;
-                document.getElementById("detalhe-autor").innerText = data.autor;
-                document.getElementById("detalhe-sinopse").innerText = data.sinopse;
-                document.getElementById("detalhe-custo").innerText = data.custo_aluguel;
-                document.getElementById("detalhe-tempo").innerText = data.tempo_aluguel;
+        fetch("detalhes.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "id=" + livroId
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.erro) {
+                alert(data.erro);
+                return;
+            }
+console.log(data);
+            document.getElementById("detalhe-img").src = "../../uploads/" + data.imagem;
+            document.getElementById("detalhe-titulo").innerText = data.titulo;
+            document.getElementById("detalhe-autor").innerText = data.autor;
+            document.getElementById("detalhe-sinopse").innerText = data.sinopse || "Sem sinopse.";
+              document.getElementById("possui_pdf").innerText = data.arquivo_pdf || "Sem pdf.";
+            document.getElementById("detalhe-custo").innerText = data.custo_aluguel || "—";
 
-                document.querySelector(".btn-carrinho").setAttribute("data-id", data.id_livro);
-
-                document.getElementById("modal-detalhes").style.display = "flex";
-            })
-            .catch(err => console.error("Erro:", err));
-        });
+            modal.style.display = "flex";
+        })
+        .catch(err => console.error("Erro ao carregar detalhes:", err));
     });
+});
 
-    // Fechar modal ao clicar no X
-    document.querySelector(".fechar").addEventListener("click", () => {
-        document.getElementById("modal-detalhes").style.display = "none";
-    });
+    fechar.addEventListener("click", () => modal.style.display = "none");
 
-    // Fechar modal ao clicar fora
     window.addEventListener("click", (e) => {
-        if (e.target === document.getElementById("modal-detalhes")) {
-            document.getElementById("modal-detalhes").style.display = "none";
-        }
+        if (e.target === modal) modal.style.display = "none";
     });
 });
 </script>
