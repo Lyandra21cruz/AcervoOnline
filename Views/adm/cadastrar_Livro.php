@@ -100,10 +100,10 @@
         .btn-voltar {
             display: inline-block;
             margin-bottom: 15px;
-            color: #fff;
+            color: #A78D78;
             font-size: 1rem;
             text-decoration: none;
-            border-bottom: 2px solid #fff;
+            border-bottom: 2px solid #A78D78;
             padding-bottom: 3px;
             transition: 0.3s;
         }
