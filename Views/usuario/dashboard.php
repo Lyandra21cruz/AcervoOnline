@@ -503,24 +503,10 @@ if (!isset($_SESSION['usuario'])) {
     </div>
 
     <div class="section">
-        <h3>Mais lidos da Semana</h3>
+        <h3>Mais lidos</h3>
         <div class="livros">
             <div class="livro">
-                <img src="https://m.media-amazon.com/images/I/81J+Iu6lDkL.jpg" alt="Bridgerton">
-                <p>Bridgerton</p>
-            </div>
-            <div class="livro">
-                <img src="https://m.media-amazon.com/images/I/81dHhy+Y5-L.jpg" alt="Nárnia">
-                <p>As Crônicas de Nárnia</p>
-            </div>
-            <div class="livro">
-                <img src="https://m.media-amazon.com/images/I/71rJgR1oOXL.jpg" alt="Crepúsculo">
-                <p>Saga Crepúsculo</p>
-            </div>
-            <div class="livro">
-                <img src="https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg" alt="Harry Potter">
-                <p>Harry Potter</p>
-            </div>
+               
         </div>
     </div>
 
