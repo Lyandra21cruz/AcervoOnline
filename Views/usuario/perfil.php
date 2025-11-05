@@ -12,8 +12,8 @@ $emailLogado = $_SESSION['usuario']['email'];
 // Conexão com o banco
 $host = "localhost";
 $dbname = "biblioteca";
-$username = "root"; // seu usuário
-$password = "";     // sua senha
+$username = "root";
+$password = "";
 
 try {
   $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
@@ -22,50 +22,7 @@ try {
   die("Erro ao conectar: " . $e->getMessage());
 }
 
-// Inicializa variáveis de erro/mensagem
-$erro = '';
-$mensagem = '';
-
-// Processa o formulário de atualização do perfil
-if (isset($_POST['salvar_perfil'])) {
-
-  // Atualiza nome e descrição
-  $nome = trim($_POST['nome']);
-  $descricao = trim($_POST['descricao']);
-
-  $stmt = $pdo->prepare("UPDATE perfil SET nome = :nome, descricao = :descricao WHERE email = :email");
-  $stmt->execute([
-    ':nome' => $nome,
-    ':descricao' => $descricao,
-    ':email' => $emailLogado
-  ]);
-
-  // Atualiza a foto, se enviada
-  if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
-    $arquivo = $_FILES['foto'];
-    $extensao = pathinfo($arquivo['name'], PATHINFO_EXTENSION);
-    $novoNome = uniqid() . "." . $extensao;
-    $destino = "../../uploads/" . $novoNome;
-
-    if (move_uploaded_file($arquivo['tmp_name'], $destino)) {
-      $stmt = $pdo->prepare("UPDATE perfil SET foto = :foto WHERE email = :email");
-      $stmt->execute([
-        ':foto' => $novoNome,
-        ':email' => $emailLogado
-      ]);
-    } else {
-      $erro = "Erro ao enviar a foto.";
-    }
-  }
-
-  if (!$erro) {
-    $mensagem = "Perfil atualizado com sucesso!";
-    header("Location: perfil.php"); // recarrega a página
-    exit;
-  }
-}
-
-// Buscar informações atualizadas do usuário logado
+// Buscar informações do usuário logado
 $stmt = $pdo->prepare("SELECT * FROM perfil WHERE email = :email");
 $stmt->execute([':email' => $emailLogado]);
 $perfil = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -73,210 +30,232 @@ $perfil = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$perfil) {
   die("Perfil não encontrado.");
 }
+
+// Buscar compras do usuário
+$stmtCompras = $pdo->prepare("SELECT * FROM compras WHERE email_usuario = :email");
+$stmtCompras->execute([':email' => $emailLogado]);
+$compras = $stmtCompras->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <title>Meu Perfil</title>
-  <!DOCTYPE html>
-  <html lang="pt-BR">
+  <link href="https://fonts.googleapis.com/css2?family=Lisu+Bosa:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <head>
-    <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <link href="https://fonts.googleapis.com/css2?family=Lisu+Bosa:wght@400;600;700&display=swap" rel="stylesheet">
-    <title>Meu Perfil</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: url("../../img/cabeçabranca3.png") no-repeat center center fixed;
-        background-size: cover;
-        display: flex;
-        justify-content: center;
+    body {
+      font-family: 'Lisu Bosa', serif;
+      background: linear-gradient(180deg, #4e342e, #8d6e63);
+      color: #fff;
+      height: 100vh;
+      width: 100vw;
+      overflow-y: auto;
+    }
+
+    .perfil-container {
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px 60px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #fff;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    .top-bar-left {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+    }
+
+    .top-bar-right a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: 0.2s;
+    }
+
+    .top-bar-right a:hover {
+      border-bottom: 1px solid #fff;
+    }
+
+    .perfil-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .foto {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background-color: #ccc;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dados {
+      flex: 1;
+      max-width: 900px;
+    }
+
+    .dados h2 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .email {
+      font-size: 15px;
+      color: #f0e5e5;
+      opacity: 0.9;
+      margin-top: 3px;
+    }
+
+    .sobre {
+      margin-top: 15px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .sobre strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+
+    .compras {
+      margin-top: 30px;
+      border-top: 1px solid #fff;
+      padding-top: 15px;
+    }
+
+    .compras strong {
+      display: block;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .livros {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .livro {
+      text-align: center;
+      width: 120px;
+    }
+
+    .livro img {
+      width: 120px;
+      height: 170px;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+
+    .livro p {
+      font-size: 13px;
+      margin-top: 6px;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .perfil-content {
+        flex-direction: column;
         align-items: center;
-        height: 100vh;
-        color: #fff;
       }
 
-      .container {
-
-        padding: 50px;
-        border-radius: 12px;
-        width: 350px;
+      .dados {
         text-align: center;
-  
       }
 
       .top-bar {
-        position: absolute;
-        top: 10px;
-        left: 15px;
-        right: 15px;
-        display: flex;
-        justify-content: space-between;
-        font-size: 14px;
+        flex-direction: column;
+        gap: 10px;
       }
-
-      .top-bar a {
-        color: #fff;
-        text-decoration: none;
-        border-bottom: 1px solid #fff;
-      }
-
-      .profile-pic {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: #ccc url('https://www.svgrepo.com/show/382104/account-avatar-profile-user.svg') no-repeat center;
-        background-size: 60%;
-        margin: 30px auto 15px;
-        overflow: hidden;
-      }
-
-      .profile-pic img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-
-      input[type="file"] {
-        display: none;
-      }
-
-      .alterar {
-        display: inline-block;
-        margin-bottom: 20px;
-        color: #fff;
-        text-decoration: none;
-        border-bottom: 1px solid #fff;
-        font-size: 14px;
-        cursor: pointer;
-      }
-
-      label {
-        display: block;
-        text-align: left;
-        margin: 10px 0 5px;
-        font-weight: bold;
-        color: #fff;
-      }
-
-      input[type="text"],
-      input[type="email"],
-      textarea {
-        width: 100%;
-        padding: 10px;
-        border-radius: 15px;
-        border: none;
-        outline: none;
-        background: #E1D4C2;
-        color: #000;
-        font-size: 15px;
-      }
-
-      textarea {
-        height: 120px;
-        resize: none;
-      }
-
-      .btn {
-        margin-top: 15px;
-        padding: 10px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        background: #E1D4C2;
-        color: #000;
-        font-weight: bold;
-        width: 100%;
-      }
-
-      .btn:hover {
-        background: #E1D4C2;
-      }
-    </style>
-  </head>
+    }
+  </style>
+</head>
 
 <body>
-  <div class="container">
+  <div class="perfil-container">
+    <!-- TOPO -->
     <div class="top-bar">
-      <a href="meu_emprestado.php">Meus Emprestados</a>
-      <a href="javascript:window.history.back()">Voltar</a>
+      <div class="top-bar-left">Meu Perfil</div>
+
+      <div class="top-bar-right">
+        <a href="dashboard.php">Página Inicial</a>
+        <a href="editar_perfil.php">Editar Perfil</a>
+      </div>
     </div>
 
-    <!-- Foto -->
-    <div class="profile-pic" id="preview">
-      <img src="../../uploads/<?php echo htmlspecialchars($perfil['foto'] ?? 'default.jpg'); ?>" alt="Foto">
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="perfil-content">
+      <div class="foto">
+        <img src="../../uploads/<?php echo htmlspecialchars($perfil['foto'] ?? 'default.jpg'); ?>" alt="Foto de perfil">
+      </div>
+
+      <div class="dados">
+        <h2><?php echo htmlspecialchars($perfil['nome'] ?? 'Usuário'); ?></h2>
+        <p class="email"><?php echo htmlspecialchars($perfil['email']); ?></p>
+
+        <div class="sobre">
+          <strong>Sobre:</strong>
+          <p>
+            <?php
+            echo nl2br(htmlspecialchars($perfil['descricao'] ??
+              "Ávida leitora e amante de histórias bem contadas, encontra nos livros uma forma de viajar por mundos e épocas diferentes. Apaixonada por literatura clássica e contemporânea, adora trocar recomendações e descobrir novas obras que despertem reflexões profundas."));
+            ?>
+          </p>
+        </div>
+      </div>
     </div>
-    <label for="foto" class="alterar">Alterar</label>
-    <form method="post" enctype="multipart/form-data" id="formPerfil">
-      <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event)">
 
-      <label>Email:</label>
-      <input type="email" name="email" value="<?php echo htmlspecialchars($perfil['email'] ?? ''); ?>" readonly>
-
-      <label>Nome:</label>
-      <input type="text" name="nome" id="nome" value="<?php echo htmlspecialchars($perfil['nome'] ?? ''); ?>">
-
-      <label>Descrição Pessoal:</label>
-      <textarea name="descricao" id="descricao"><?php echo htmlspecialchars($perfil['descricao'] ?? ''); ?></textarea>
-
-      <!-- botão começa escondido -->
-      <button type="submit" name="salvar_perfil" id="btnSalvar" class="btn" style="display:none;">
-        Salvar Perfil
-      </button>
-    </form>
-
-    <?php
-    if ($erro)
-      echo "<p style='color:red;'>$erro</p>";
-    if ($mensagem)
-      echo "<p style='color:green;'>$mensagem</p>";
-    ?>
+    <!-- COMPRAS -->
+    <div class="compras">
+      <strong>Minhas Compras</strong>
+      <div class="livros">
+        <?php if ($compras && count($compras) > 0): ?>
+          <?php foreach ($compras as $livro): ?>
+            <div class="livro">
+              <img src="../../uploads/<?php echo htmlspecialchars($livro['capa_livro']); ?>" alt="Capa do livro">
+              <p><?php echo htmlspecialchars($livro['titulo_livro']); ?></p>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>Nenhum livro comprado ainda.</p>
+        <?php endif; ?>
+      </div>
+    </div>
   </div>
-
-  <script>
-    const form = document.getElementById("formPerfil");
-    const btnSalvar = document.getElementById("btnSalvar");
-
-    // valores originais
-    const originalNome = document.getElementById("nome").value;
-    const originalDescricao = document.getElementById("descricao").value;
-
-    // quando muda algo no formulário → mostra botão
-    form.addEventListener("input", checkChanges);
-    form.addEventListener("change", checkChanges);
-
-    function checkChanges() {
-      const nome = document.getElementById("nome").value;
-      const descricao = document.getElementById("descricao").value;
-      const foto = document.getElementById("foto").files.length > 0;
-
-      if (nome !== originalNome || descricao !== originalDescricao || foto) {
-        btnSalvar.style.display = "block"; // mostra botão
-      } else {
-        btnSalvar.style.display = "none"; // esconde se voltou ao original
-      }
-    }
-
-    // preview da imagem no círculo
-    function previewImage(event) {
-      const preview = document.getElementById('preview');
-      preview.innerHTML = "";
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(event.target.files[0]);
-      preview.appendChild(img);
-      checkChanges(); // força verificar alterações
-    }
-  </script>
-
-</body>
-
-</html>
-
-</div>
 </body>
 
 </html>
