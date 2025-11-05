@@ -8,15 +8,21 @@ class UsuarioController {
         $this->model = new UsuarioModel();
     }
 
-    public function cadastrar($nome, $email, $senha) {
-        if ($this->model->cadastrar($nome, $email, $senha)) {
-            $this->model->cadastrarPerfil($nome, $email);
-            header("Location: index.php?pagina=login&msg=sucesso");
-            exit;
-        } else {
-            echo "Erro ao cadastrar!";
-        }
+public function cadastrar($nome, $email, $senha) {
+    $resultado = $this->model->cadastrar($nome, $email, $senha);
+
+    if ($resultado === true) {
+        $perfil = $this->model->cadastrarPerfil($nome, $email);
+        // Mesmo que já exista, continua o fluxo sem erro
+        header("Location: index.php?pagina=login&msg=sucesso");
+        exit;
+    } elseif ($resultado === "email_duplicado") {
+        header("Location: index.php?pagina=cadastro&erro=email_existente");
+        exit;
+    } else {
+        echo "Erro ao cadastrar!";
     }
+}
 
     public function login($email, $senha) {
         // Primeiro tenta login como Administrador

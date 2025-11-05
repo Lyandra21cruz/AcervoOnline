@@ -11,24 +11,39 @@ class UsuarioModel {
 
     // Cadastrar
     public function cadastrar($nome, $email, $senha) {
-        $hash = password_hash($senha, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([
-            ":nome" => $nome,
-            ":email" => $email,
-            ":senha" => $hash
-        ]);
+    // Verifica se o e-mail já está cadastrado
+    $check = $this->conn->prepare("SELECT COUNT(*) FROM usuarios WHERE email = :email");
+    $check->execute([":email" => $email]);
+    if ($check->fetchColumn() > 0) {
+        // Retorna falso ou lança uma exceção customizada
+        return "email_duplicado";
+    } $hash = password_hash($senha, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)";
+    $stmt = $this->conn->prepare($sql);
+    return $stmt->execute([
+        ":nome" => $nome,
+        ":email" => $email,
+        ":senha" => $hash
+    ]);
+}
+
+    public function cadastrarPerfil($nome, $email) {
+    // Verifica se o e-mail já existe no perfil
+    $check = $this->conn->prepare("SELECT COUNT(*) FROM perfil WHERE email = :email");
+    $check->execute([":email" => $email]);
+    if ($check->fetchColumn() > 0) {
+        // Já existe o e-mail — não tenta inserir novamente
+        return "email_duplicado";
     }
 
-     public function cadastrarPerfil($nome, $email) {
-        $sql = "INSERT INTO perfil (nome, email) VALUES (:nome, :email)";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([
-            ":nome" => $nome,
-            ":email" => $email
-        ]);
-    }
+    // Se não existir, insere normalmente
+    $sql = "INSERT INTO perfil (nome, email) VALUES (:nome, :email)";
+    $stmt = $this->conn->prepare($sql);
+    return $stmt->execute([
+        ":nome" => $nome,
+        ":email" => $email
+    ]);
+}
     // Login
     public function login($email, $senha) {
         $sql = "SELECT * FROM usuarios WHERE email = :email LIMIT 1";
