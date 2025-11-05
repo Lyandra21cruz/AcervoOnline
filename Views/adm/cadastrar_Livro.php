@@ -148,7 +148,6 @@
                     <option value="religioso">Religioso</option>
                     <option value="infantil">Infantil</option>
                     <option value="academico">Académico</option>
-                    <option value="biografia">Biografia</option>
                     <option value="historia">Historia</option>
                     <option value="poesia">Poesia</option>
                     <option value="classico">Clássicos da Literatura</option>
