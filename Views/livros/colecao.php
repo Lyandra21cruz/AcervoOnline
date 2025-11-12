@@ -208,7 +208,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
     font-size: 18px;
     line-height: 1.6;
     margin: 6px 0;
-    color: #fff; /* texto mais visível em branco */
+    color: #000000ff; /* texto mais visível em branco */
 }
 
 .detalhes-info strong {

@@ -209,7 +209,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
     font-size: 18px;
     line-height: 1.6;
     margin: 6px 0;
-    color: #fff; /* texto mais visível em branco */
+    color: #000000ff; /* texto mais visível em branco */
 }
 
 .detalhes-info strong {
@@ -262,7 +262,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="javascript:history.back()" class="voltar">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <h1 class="page-title">Ficçaõ Cientifica 🔭</h1>
+            <h1 class="page-title">Ficção Cientifica 🔭</h1>
             <p class="page-subtitle">"Pense Além. A jornada que expande sua mente para universos de novas possibilidades."</p>
         </header>
         <br><br><br><br>
