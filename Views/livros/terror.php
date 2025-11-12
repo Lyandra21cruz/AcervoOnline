@@ -300,7 +300,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p><strong>Autor:</strong> <span id="detalhe-autor"></span></p>
                 <p><strong>Sinopse:</strong> <span id="detalhe-sinopse"></span></p>
                   <p><strong>Pdf:</strong> <span id="possui_pdf"></span></p>
-                <p><strong>Custo Aluguel:</strong> R$ <span id="detalhe-custo"></span></p>
+                <p><strong>Custo:</strong> R$ <span id="detalhe-custo"></span></p>
                 <button class="btn-carrinho">Adicionar ao Carrinho</button>
             </div>
         </div>
