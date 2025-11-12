@@ -287,127 +287,166 @@ if (!isset($_SESSION['usuario'])) {
             margin-top: 5px;
             font-size: 14px;
         }
-:root{
-    --gap: 24px;
-  }
 
-  /* container externo: esconde tudo que estiver além da área (horizontalmente) */
-  .carrossel-container{
-    position: relative;
-    width: 100%;
-    overflow: hidden; /* importante para mascarar os itens que saem à esquerda/direita */
-    padding: 32px 56px;
-    box-sizing: border-box;
-    background: ##E1D4C2;
-  }
+        :root {
+            --gap: 24px;
+        }
 
-  /* elemento que faz o scroll: precisa ser scrollable no eixo X */
-  .carrossel{
-    display: flex;
-    gap: var(--gap);
-    overflow-x: auto;               /* <-- permite scrollBy e scroll natural */
-    overflow-y: visible;            /* evitar cortar sombras verticais se precisarem aparecer */
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;            /* evita cortar sombra inferior */
-    box-sizing: border-box;
-  }
+        /* container externo: esconde tudo que estiver além da área (horizontalmente) */
+        .carrossel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            /* importante para mascarar os itens que saem à esquerda/direita */
+            padding: 32px 56px;
+            box-sizing: border-box;
+            background: ##E1D4C2;
+        }
 
-  /* esconder barra de rolagem (visual) */
-  .carrossel::-webkit-scrollbar{ height: 8px; display: none; } /* chrome/safari */
-  .carrossel { scrollbar-width: none; -ms-overflow-style: none; } /* firefox/ie */
+        /* elemento que faz o scroll: precisa ser scrollable no eixo X */
+        .carrossel {
+            display: flex;
+            gap: var(--gap);
+            overflow-x: auto;
+            /* <-- permite scrollBy e scroll natural */
+            overflow-y: visible;
+            /* evitar cortar sombras verticais se precisarem aparecer */
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 8px;
+            /* evita cortar sombra inferior */
+            box-sizing: border-box;
+        }
 
-  /* cada item (só o wrapper externo, não escala ele) */
-  .genero{
-    flex: 0 0 calc(33.333% - (var(--gap) * 2 / 3)); /* 3 por vez */
-    box-sizing: border-box;
-    position: relative;
-    z-index: 1;
-    text-decoration: none;
-    color: inherit;
-  }
+        /* esconder barra de rolagem (visual) */
+        .carrossel::-webkit-scrollbar {
+            height: 8px;
+            display: none;
+        }
 
-  /* cartão interno que realmente tem borda, padding e será escalado no hover.
+        /* chrome/safari */
+        .carrossel {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        /* firefox/ie */
+
+        /* cada item (só o wrapper externo, não escala ele) */
+        .genero {
+            flex: 0 0 calc(33.333% - (var(--gap) * 2 / 3));
+            /* 3 por vez */
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* cartão interno que realmente tem borda, padding e será escalado no hover.
      mantendo este wrapper para não alterar a largura do flex item ao escalar */
-  .genero-inner{
-    width: 100%;
-    height: 220px; /* ajuste conforme seu layout */
-    background: #A78D78;
-    border-radius: 14px;
-    padding: 28px 18px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms;
-    transform-origin: center center;
-    will-change: transform;
-    position: relative;
-  }
+        .genero-inner {
+            width: 100%;
+            height: 220px;
+            /* ajuste conforme seu layout */
+            background: #A78D78;
+            border-radius: 14px;
+            padding: 28px 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 220ms cubic-bezier(.2, .9, .3, 1), box-shadow 220ms;
+            transform-origin: center center;
+            will-change: transform;
+            position: relative;
+        }
 
-  .genero i{
-    font-size: 44px;
-    margin-bottom: 12px;
-    color: var(--primary);
-  }
+        .genero i {
+            font-size: 44px;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
 
-  .genero span{
-    font-weight: 700;
-    font-size: 18px;
-    text-align: center;
-    color: #fff;
-  }
+        .genero span {
+            font-weight: 700;
+            font-size: 18px;
+            text-align: center;
+            color: #fff;
+        }
 
-.genero:hover .genero-inner,
-.genero:focus-within .genero-inner {
-  background: #4a2c20;
-}
+        .genero:hover .genero-inner,
+        .genero:focus-within .genero-inner {
+            background: #4a2c20;
+        }
 
-.genero:hover .genero-inner i,
-.genero:focus-within .genero-inner i {
-  color: #b08b73;
-}
+        .genero:hover .genero-inner i,
+        .genero:focus-within .genero-inner i {
+            color: #b08b73;
+        }
 
-.genero:hover .genero-inner span,
-.genero:focus-within .genero-inner span {
-  color: #b08b73;
-}
+        .genero:hover .genero-inner span,
+        .genero:focus-within .genero-inner span {
+            color: #b08b73;
+        }
 
-  /* botões */
-  .btn-nav{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--primary);
-    border: none;
-    color: #fff;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    z-index: 40;
-    background-color: #4a2c20;
-  }
+        /* botões */
+        .btn-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            z-index: 40;
+            background-color: #4a2c20;
+        }
 
-  .btn-nav.left{ left: 12px; }
-  .btn-nav.right{ right: 12px; }
+        .btn-nav.left {
+            left: 12px;
+        }
 
-  .btn-nav:active{ transform: translateY(-50%) scale(.98); }
-  .btn-nav i{ font-size: 16px; }
+        .btn-nav.right {
+            right: 12px;
+        }
 
-  /* responsividade: reduzir espaço e tamanho em telas pequenas */
-  @media (max-width: 900px){
-    .genero { flex: 0 0 calc(50% - (var(--gap)/2)); }
-    .genero-inner{ height: 180px; padding: 20px; }
-  }
+        .btn-nav:active {
+            transform: translateY(-50%) scale(.98);
+        }
 
-  @media (max-width: 520px){
-    .genero { flex: 0 0 calc(100% - var(--gap)); }
-    .carrossel-container { padding: 20px; }
-  }
+        .btn-nav i {
+            font-size: 16px;
+        }
+
+        /* responsividade: reduzir espaço e tamanho em telas pequenas */
+        @media (max-width: 900px) {
+            .genero {
+                flex: 0 0 calc(50% - (var(--gap)/2));
+            }
+
+            .genero-inner {
+                height: 180px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .genero {
+                flex: 0 0 calc(100% - var(--gap));
+            }
+
+            .carrossel-container {
+                padding: 20px;
+            }
+        }
+
         .logo-container {
             display: flex;
             justify-content: center;
@@ -430,6 +469,135 @@ if (!isset($_SESSION['usuario'])) {
             font-weight: bold;
             background: transparent;
         }
+
+
+        /* ===== RODAPÉ ===== */
+        .site-footer {
+            width: 100%;
+            background-color: #5a3b29;
+            color: #f5e6d3;
+            padding: 40px 60px 20px;
+            font-family: "Arial", sans-serif;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-inner .col {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .footer-inner h4 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #f8e9d8;
+            font-weight: 600;
+        }
+
+        .footer-inner p {
+            margin: 6px 0;
+            font-size: 1rem;
+            color: #f5e6d3;
+            cursor: pointer;
+        }
+
+        .footer-inner p:hover {
+            text-decoration: underline;
+        }
+
+        .socials a {
+            margin-right: 6px;
+            color: #f5e6d3;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .socials a:hover {
+            color: #fff;
+        }
+
+        .bottom {
+            text-align: center;
+            font-size: 0.95rem;
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid #7b5a42;
+            color: #f5e6d3;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .socials {
+                justify-content: center;
+                display: flex;
+            }
+        }
+
+
+/* === TELA DE CARREGAMENTO PROFISSIONAL === */
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #d8b892 0%, #a9744f 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+.loading-screen.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.loading-logo {
+    width: 220px;
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 25px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    animation: fadeIn 1s ease forwards;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
     </style>
 </head>
 
@@ -506,145 +674,183 @@ if (!isset($_SESSION['usuario'])) {
         <h3>Mais lidos</h3>
         <div class="livros">
             <div class="livro">
-               
+
+            </div>
         </div>
+
+        <div class="section">
+            <h3>Explorar por gênero</h3>
+            <div class="carrossel-container">
+                <button class="btn-nav left" aria-label="Anterior" onclick="scrollCarousel(-1)">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <div class="carrossel" id="carrossel">
+                    <a href="../livros/romance.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Romance</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/aventura.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                            <span>Aventura</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/fantasia.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-hat-wizard"></i>
+                            <span>Fantasia</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/biografia.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                            <span>Biografia</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/terror.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-ghost"></i>
+                            <span>Terror</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/suspense.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-user-secret"></i>
+                            <span>Suspense</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/cientifica.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-rocket"></i>
+                            <span>Ficção Científica</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/religioso.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-church"></i>
+                            <span>Religioso</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/infantil.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-child"></i>
+                            <span>Infantil</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/academico.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>Acadêmico</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/historia.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-landmark"></i>
+                            <span>História</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/poesia.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-feather"></i>
+                            <span>Poesia</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/classico.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Clássicos</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/hq.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-dragon"></i>
+                            <span>HQ / Mangá</span>
+                        </div>
+                    </a>
+
+
+                    <a href="../livros/colecao.php" class="genero">
+                        <div class="genero-inner">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <span>Coleções</span>
+                        </div>
+                    </a>
+                </div>
+
+                <button class="btn-nav right" aria-label="Próximo" onclick="scrollCarousel(1)">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+
+
+        </div>
+
     </div>
 
-    <div class="section">
-        <h3>Explorar por gênero</h3>
-     <div class="carrossel-container">
-  <button class="btn-nav left" aria-label="Anterior" onclick="scrollCarousel(-1)">
-    <i class="fa-solid fa-chevron-left"></i>
-  </button>
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="col">
+                <h4>Livros</h4>
+                <p>Gêneros</p>
+            </div>
 
-  <div class="carrossel" id="carrossel">
-    <a href="../livros/romance.php" class="genero">
-      <div class="genero-inner">
-      <i class="fa-solid fa-heart"></i>
-      <span>Romance</span>
-      </div>
-    </a>
+            <div class="col">
+                <h4>Institucional</h4>
+                <p>Lançamentos</p>
+            </div>
 
+            <div class="col">
+                <h4>Atendimento</h4>
+                <p>Faq</p>
+                <p>Devoluções</p>
+                <p>Entrega</p>
+            </div>
 
-    <a href="../livros/aventura.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-mountain-sun"></i>
-      <span>Aventura</span>
-      </div>
-    </a>
+            <div class="col">
+                <h4>Siga-nos</h4>
+                <div class="socials" aria-label="Redes sociais">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
 
+        <div class="bottom">
+            © 2024 Livros. Todos os direitos reservados.
+        </div>
+    </footer>
 
-    <a href="../livros/fantasia.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-hat-wizard"></i>
-      <span>Fantasia</span>
-       </div>
-    </a>
-
-
-    <a href="../livros/biografia.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-book-open-reader"></i>
-      <span>Biografia</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/terror.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-ghost"></i>
-      <span>Terror</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/suspense.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-user-secret"></i>
-      <span>Suspense</span>
-       </div>
-    </a>
-
-
-    <a href="../livros/cientifica.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-rocket"></i>
-      <span>Ficção Científica</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/religioso.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-church"></i>
-      <span>Religioso</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/infantil.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-child"></i>
-      <span>Infantil</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/academico.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-graduation-cap"></i>
-      <span>Acadêmico</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/historia.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-landmark"></i>
-      <span>História</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/poesia.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-feather"></i>
-      <span>Poesia</span>
-       </div>
-    </a>
-
-
-    <a href="../livros/classicos.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-book-open"></i>
-      <span>Clássicos</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/hq.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-dragon"></i>
-      <span>HQ / Mangá</span>
-      </div>
-    </a>
-
-
-    <a href="../livros/colecao.php" class="genero">
-         <div class="genero-inner">
-      <i class="fa-solid fa-layer-group"></i>
-      <span>Coleções</span>
-      </div>
-    </a>
-  </div>
-
-  <button class="btn-nav right" aria-label="Próximo" onclick="scrollCarousel(1)">
-    <i class="fa-solid fa-chevron-right"></i>
-  </button>
-</div>
-
-
-    </div>
 
     <script>
         function openMenu() {
@@ -656,53 +862,87 @@ if (!isset($_SESSION['usuario'])) {
             document.getElementById("overlay").classList.remove("active");
         }
 
- (function(){
-    const carrossel = document.getElementById('carrossel');
+        (function () {
+            const carrossel = document.getElementById('carrossel');
 
-    function getGap(pxFallback = 24){
-      const style = getComputedStyle(carrossel);
-      const g = parseFloat(style.gap || style.columnGap || style.getPropertyValue('--gap')) || pxFallback;
-      return g;
-    }
+            function getGap(pxFallback = 24) {
+                const style = getComputedStyle(carrossel);
+                const g = parseFloat(style.gap || style.columnGap || style.getPropertyValue('--gap')) || pxFallback;
+                return g;
+            }
 
-    function scrollCarousel(direction){
-      const firstItem = carrossel.querySelector('.genero');
-      if(!firstItem) return;
+            function scrollCarousel(direction) {
+                const firstItem = carrossel.querySelector('.genero');
+                if (!firstItem) return;
 
-      const gap = getGap();
-      const step = Math.round(firstItem.getBoundingClientRect().width + gap);
-      
-      // posição antes do scroll
-      const maxScroll = carrossel.scrollWidth - carrossel.clientWidth;
-      
-      if(direction > 0){ // próximo
-        if(carrossel.scrollLeft + step >= maxScroll){
-          // chegou no fim, volta pro início
-          carrossel.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          carrossel.scrollBy({ left: step, behavior: 'smooth' });
-        }
-      } else { // anterior
-        if(carrossel.scrollLeft - step <= 0){
-          // chegou no início, vai pro fim
-          carrossel.scrollTo({ left: maxScroll, behavior: 'smooth' });
-        } else {
-          carrossel.scrollBy({ left: -step, behavior: 'smooth' });
-        }
-      }
-    }
+                const gap = getGap();
+                const step = Math.round(firstItem.getBoundingClientRect().width + gap);
 
-    window.scrollCarousel = scrollCarousel;
+                // posição antes do scroll
+                const maxScroll = carrossel.scrollWidth - carrossel.clientWidth;
 
-    document.addEventListener('keydown', (e) => {
-      if(document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
-      if(e.key === 'ArrowRight') scrollCarousel(1);
-      if(e.key === 'ArrowLeft') scrollCarousel(-1);
+                if (direction > 0) { // próximo
+                    if (carrossel.scrollLeft + step >= maxScroll) {
+                        // chegou no fim, volta pro início
+                        carrossel.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        carrossel.scrollBy({ left: step, behavior: 'smooth' });
+                    }
+                } else { // anterior
+                    if (carrossel.scrollLeft - step <= 0) {
+                        // chegou no início, vai pro fim
+                        carrossel.scrollTo({ left: maxScroll, behavior: 'smooth' });
+                    } else {
+                        carrossel.scrollBy({ left: -step, behavior: 'smooth' });
+                    }
+                }
+            }
+
+            window.scrollCarousel = scrollCarousel;
+
+            document.addEventListener('keydown', (e) => {
+                if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+                if (e.key === 'ArrowRight') scrollCarousel(1);
+                if (e.key === 'ArrowLeft') scrollCarousel(-1);
+            });
+
+        })();
+    </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const generoLinks = document.querySelectorAll(".genero");
+    const loading = document.getElementById("loadingScreen");
+
+    generoLinks.forEach(link => {
+        link.addEventListener("click", event => {
+            event.preventDefault();
+            const destino = link.getAttribute("href");
+
+            // ativa o overlay
+            loading.classList.add("active");
+
+            // espera um pouco e redireciona
+            setTimeout(() => {
+                window.location.href = destino;
+            }, 1500);
+        });
     });
 
-})();
-    </script>
+    // garante que ao voltar o overlay suma
+    window.addEventListener("pageshow", () => {
+        loading.classList.remove("active");
+    });
+});
+</script>
+
+</script>
+
 
 </body>
+<div id="loadingScreen" class="loading-screen">
+    <img src="../../img/download (9).png" alt="Logo AcervoOnline" class="loading-logo">
+    <div class="spinner"></div>
+</div>
+
 
 </html>

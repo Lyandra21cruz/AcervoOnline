@@ -33,7 +33,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0;
             min-height: 100vh;
             font-family: Georgia, serif;
-            background: linear-gradient(180deg, #cbb09b 0%, #a78772 70%);
+            background: linear-gradient(180deg, #6c5633ff 0%, #f3ccb2ff 70%);
             color: #2f1f1a;
         }
 
@@ -118,7 +118,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background-color: #4b2e2e;
+            background-color: #161718ff;
             /* marrom escuro */
             color: #fff;
             /* ícone branco */
@@ -130,7 +130,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .voltar:hover {
-            background-color: #6d3f3f;
+            background-color: #191a1bff;
             transform: scale(1.1);
         }
 
@@ -262,7 +262,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="javascript:history.back()" class="voltar">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <h1 class="page-title">Ficçaõ Cientifica ༘⋆₊ ⊹★🔭๋࣭ ⭑⋆｡˚</h1>
+            <h1 class="page-title">Ficçaõ Cientifica 🔭</h1>
             <p class="page-subtitle">"Pense Além. A jornada que expande sua mente para universos de novas possibilidades."</p>
         </header>
         <br><br><br><br>

@@ -32,7 +32,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0;
             min-height: 100vh;
             font-family: Georgia, serif;
-            background: linear-gradient(180deg, #cbb09b 0%, #a78772 70%);
+            background: linear-gradient(180deg,  #6c5633ff 0%, #f3ccb2ff 70%);
             color: #2f1f1a;
         }
 
@@ -261,7 +261,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="javascript:history.back()" class="voltar">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <h1 class="page-title">HQ / Mangás 🍵⋆｡°🍡°⋆. ࿔*:･⋆₊</h1>
+            <h1 class="page-title">HQ / Mangás 🍵</h1>
             <p class="page-subtitle">"Ação Imediata. Experiencie a narrativa no ritmo vibrante da arte."</p>
         </header>
         <br><br><br><br>

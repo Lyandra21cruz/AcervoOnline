@@ -32,8 +32,8 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0;
             min-height: 100vh;
             font-family: Georgia, serif;
-            background: linear-gradient(180deg, #cbb09b 0%, #a78772 70%);
-            color: #2f1f1a;
+            background: linear-gradient(180deg, #030303ff 0%, #680b0bff 70%);
+            color: #d7d0d0ff;
         }
 
         .wrapper {
@@ -117,7 +117,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background-color: #4b2e2e;
+            background-color: #170404ff;
             /* marrom escuro */
             color: #fff;
             /* ícone branco */
@@ -129,7 +129,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .voltar:hover {
-            background-color: #6d3f3f;
+            background-color: #4f0505ff;
             transform: scale(1.1);
         }
 
@@ -261,7 +261,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="javascript:history.back()" class="voltar">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <h1 class="page-title">Terror ‧₊˚🕷‧₊˚</h1>
+            <h1 class="page-title">Terror🕷</h1>
             <p class="page-subtitle">"Apague as luzes e sinta o medo mais profundo."</p>
         </header>
         <br><br><br><br>
