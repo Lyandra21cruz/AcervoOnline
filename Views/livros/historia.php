@@ -32,7 +32,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0;
             min-height: 100vh;
             font-family: Georgia, serif;
-            background: linear-gradient(180deg, #cbb09b 0%, #a78772 70%);
+            background: linear-gradient(180deg, #6c5633ff 0%, #f3ccb2ff 70%);
             color: #2f1f1a;
         }
 
@@ -261,7 +261,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="javascript:history.back()" class="voltar">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <h1 class="page-title">História ‧₊˚𓀚 𓃔𓃽₊˚</h1>
+            <h1 class="page-title">História 𓀚</h1>
             <p class="page-subtitle">"Aprenda com o Passado. Entenda quem você é, descobrindo quem eles foram."</p>
         </header>
         <br><br><br><br>

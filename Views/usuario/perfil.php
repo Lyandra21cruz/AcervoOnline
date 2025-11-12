@@ -54,7 +54,7 @@ $compras = $stmtCompras->fetchAll(PDO::FETCH_ASSOC);
 
     body {
       font-family: 'Lisu Bosa', serif;
-      background: linear-gradient(180deg, #4e342e, #8d6e63);
+      background: linear-gradient(180deg, #4e342e, #291C0E);
       color: #fff;
       height: 100vh;
       width: 100vw;
