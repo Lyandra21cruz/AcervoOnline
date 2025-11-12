@@ -208,7 +208,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
     line-height: 1.6;
     margin: 6px 0;
     /* CORREÇÃO DE COR: O branco era invisível no fundo bege. */
-    color: #5b3d34ff;
+    color: #000000ff;
 }
 
 
