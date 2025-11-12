@@ -33,7 +33,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0;
             min-height: 100vh;
             font-family: Georgia, serif;
-            background: linear-gradient(180deg, #887353ff 0%, #f3ccb2ff 70%);
+            background: linear-gradient(180deg, #6c5633ff 0%, #f3ccb2ff 70%);
             color: #2f1f1a;
         }
 
