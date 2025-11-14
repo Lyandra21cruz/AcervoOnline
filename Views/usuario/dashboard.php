@@ -785,23 +785,36 @@ if (!isset($_SESSION['usuario'])) {
     font-weight: 700;
     color: #4b2e2e;
 }
-
-.btn-carrinho {
-    margin-top: 25px;
-    padding: 14px 28px;
-    font-size: 16px;
-    background: #4b2e2e;
+   .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #4a2e1e;           /* marrom escuro elegante */
     color: #fff;
-    border: none;
+    padding: 12px 20px;
     border-radius: 8px;
-    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
     transition: all 0.3s ease;
-    align-self: flex-start;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    border: 2px solid transparent;
 }
 
-.btn-carrinho:hover {
-    background: #6d3f3f;
-    transform: scale(1.05);
+.btn-add i {
+    font-size: 18px;
+}
+
+.btn-add:hover {
+    background: #6c3f24;          /* tom mais claro no hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+    border-color: #8d5836;        /* destaque suave */
+}
+
+.btn-add:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 @keyframes fadeIn {
@@ -1150,13 +1163,68 @@ if (!isset($_SESSION['usuario'])) {
 
                 <p><strong>Custo do Aluguel:</strong> R$ <span id="detalhe-custo"></span></p>
 
-                <button class="btn-carrinho">Adicionar ao Carrinho</button>
+          <a id="modal-add-cart" class="btn-add" href="#" >
+                    <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                </a>
             </div>
 
         </div>
 
     </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const modal = document.getElementById("modal-detalhes");
+    const fechar = document.querySelector(".fechar");
+    const addCartLink = document.getElementById("modal-add-cart");
+
+    // Quando clicar em um card do carrossel
+    document.querySelectorAll(".livro-card").forEach(card => {
+        card.addEventListener("click", function () {
+
+            const id = this.getAttribute("data-id");
+
+            fetch("../livros/detalhes.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "id=" + encodeURIComponent(id)
+            })
+            .then(res => res.json())
+            .then(data => {
+
+                if (data.erro) {
+                    alert(data.erro);
+                    return;
+                }
+
+                // Preenche modal
+                document.getElementById("detalhe-img").src = "../../uploads/" + data.imagem;
+                document.getElementById("detalhe-titulo").innerText = data.titulo;
+                document.getElementById("detalhe-autor").innerText = data.autor;
+                document.getElementById("detalhe-sinopse").innerText = data.sinopse || "Sem sinopse";
+                document.getElementById("possui_pdf").innerText = data.arquivo_pdf || "Não possui PDF";
+                document.getElementById("detalhe-custo").innerText = data.custo_aluguel || "—";
+
+                // 💥 CORREÇÃO: setar link DO CARRINHO corretamente
+                addCartLink.href = "../livros/adicionar_carrinho.php?id=" + encodeURIComponent(data.id_livro);
+
+                modal.style.display = "flex";
+            })
+            .catch(err => console.error(err));
+        });
+    });
+
+    // Fechar modal
+    fechar.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+    });
+
+});
+</script>
+
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -1306,7 +1374,56 @@ function scrollCarouselComprados(direction) {
 }
 </script>
 
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("modal-detalhes");
+            const fechar = document.querySelector(".fechar");
+            const addCartLink = document.getElementById("modal-add-cart");
 
+            document.querySelectorAll(".livro a").forEach(link => {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const livroId = new URL(this.href).searchParams.get("id");
+
+                    fetch("../livros/detalhes.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: "id=" + encodeURIComponent(livroId)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.erro) {
+                                alert(data.erro);
+                                return;
+                            }
+
+                            // preencher modal
+                            document.getElementById("detalhe-img").src = "../../uploads/" + data.imagem;
+                            document.getElementById("detalhe-titulo").innerText = data.titulo;
+                            document.getElementById("detalhe-autor").innerText = data.autor;
+                            document.getElementById("detalhe-sinopse").innerText = data.sinopse || "Sem sinopse.";
+                            document.getElementById("possui_pdf").innerText = data.arquivo_pdf || "Sem pdf.";
+                            document.getElementById("detalhe-custo").innerText = data.custo_aluguel || "—";
+
+                            // **ATENÇÃO**: define o href do botão de adicionar ao carrinho com o id correto
+                            // use o campo exato que seu detalhes.php retorna (ex: data.id_livro ou data.id)
+                            const idParaCarrinho = data.id_livro ?? data.id ?? livroId;
+                            addCartLink.href = "../livros/adicionar_carrinho.php?id=" + encodeURIComponent(idParaCarrinho);
+
+                            modal.style.display = "flex";
+                        })
+                        .catch(err => console.error("Erro ao carregar detalhes:", err));
+                });
+            });
+
+            fechar.addEventListener("click", () => modal.style.display = "none");
+
+            window.addEventListener("click", (e) => {
+                if (e.target === modal) modal.style.display = "none";
+            });
+        });
+    </script>
 
 </body>
 <div id="loadingScreen" class="loading-screen">
