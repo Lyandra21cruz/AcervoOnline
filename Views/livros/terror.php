@@ -216,23 +216,38 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
     color: #4b2e2e; /* labels em marrom escuro */
 }
 
-.btn-carrinho {
-    margin-top: 25px;
-    padding: 14px 28px;
-    font-size: 16px;
-    background: #4b2e2e;
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #4a2e1e;           /* marrom escuro elegante */
     color: #fff;
-    border: none;
+    padding: 12px 20px;
     border-radius: 8px;
-    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
     transition: all 0.3s ease;
-    align-self: flex-start;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    border: 2px solid transparent;
 }
 
-.btn-carrinho:hover {
-    background: #6d3f3f;
-    transform: scale(1.05);
+.btn-add i {
+    font-size: 18px;
 }
+
+.btn-add:hover {
+    background: #6c3f24;          /* tom mais claro no hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+    border-color: #8d5836;        /* destaque suave */
+}
+
+.btn-add:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
 
 /* Animação de entrada */
 @keyframes fadeIn {
@@ -301,8 +316,9 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p><strong>Sinopse:</strong> <span id="detalhe-sinopse"></span></p>
                   <p><strong>Pdf:</strong> <span id="possui_pdf"></span></p>
                 <p><strong>Custo:</strong> R$ <span id="detalhe-custo"></span></p>
-                <button class="btn-carrinho">Adicionar ao Carrinho</button>
-            </div>
+              <a id="modal-add-cart" class="btn-add" href="#" >
+                    <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                </a>
         </div>
     </div>
 </div>
