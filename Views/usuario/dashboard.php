@@ -710,6 +710,112 @@ if (!isset($_SESSION['usuario'])) {
                 transform: translateY(0);
             }
         }
+
+
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: #E1D4C2;
+    color: #2f1f1a;
+    border-radius: 16px;
+    max-width: 950px;
+    width: 95%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-body {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.modal-body img {
+    width: 320px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.detalhes-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.detalhes-info h2 {
+    font-size: 30px;
+    font-weight: 800;
+    margin: 0;
+    color: #3a2323;
+}
+
+.detalhes-info h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    color: #5a3a2a;
+}
+
+.detalhes-info p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 6px 0;
+    color: #000;
+}
+
+.detalhes-info strong {
+    font-weight: 700;
+    color: #4b2e2e;
+}
+
+.btn-carrinho {
+    margin-top: 25px;
+    padding: 14px 28px;
+    font-size: 16px;
+    background: #4b2e2e;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.btn-carrinho:hover {
+    background: #6d3f3f;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fechar {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    align-self: flex-end;
+}
     </style>
 </head>
 
@@ -816,22 +922,18 @@ if (!isset($_SESSION['usuario'])) {
                         $capa = "";
 
                         if (!empty($livro['imagem'])) {
-                            // Se o campo já contém 'uploads/', usa direto
                             if (strpos($livro['imagem'], 'uploads/') !== false) {
                                 $capa = "../../" . $livro['imagem'];
-                            }
-                            // Se for só o nome do arquivo, adiciona o caminho da pasta uploads
-                            else {
+                            } else {
                                 $capa = "../../uploads/" . $livro['imagem'];
                             }
                         } else {
-                            // Imagem padrão se não houver
                             $capa = "../../img/sem-capa.png";
                         }
 
-                        // Exibe o card do livro
+                        // --- CARD COM MODAL ---
                         echo "
-                        <div class='livro-card'>
+                        <div class='livro-card open-modal' data-id='{$livro['id_livro']}'>
                             <div class='livro-inner'>
                                 <img src='{$capa}' alt='{$livro['titulo']}' class='livro-capa'>
                                 <p class='livro-titulo'>{$livro['titulo']}</p>
@@ -852,7 +954,6 @@ if (!isset($_SESSION['usuario'])) {
         </button>
     </div>
 </div>
-
 
 
         <div class="section">
@@ -1024,11 +1125,86 @@ if (!isset($_SESSION['usuario'])) {
         </div>
 
         <div class="bottom">
-            © 2024 Livros. Todos os direitos reservados.
+            © 2025 Livros. Todos os direitos reservados.
         </div>
     </footer>
 
 
+<div id="modal-detalhes" class="modal">
+    <div class="modal-content">
+
+        <span class="fechar">&times;</span>
+
+        <div class="modal-body">
+
+            <img id="detalhe-img" src="">
+
+            <div class="detalhes-info">
+                <h2 id="detalhe-titulo"></h2>
+                <h3><strong>Autor:</strong> <span id="detalhe-autor"></span></h3>
+
+                <p><strong>Sinopse:</strong></p>
+                <p id="detalhe-sinopse"></p>
+
+                <p><strong>Possui PDF:</strong> <span id="possui_pdf"></span></p>
+
+                <p><strong>Custo do Aluguel:</strong> R$ <span id="detalhe-custo"></span></p>
+
+                <button class="btn-carrinho">Adicionar ao Carrinho</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const modal = document.getElementById("modal-detalhes");
+    const fechar = document.querySelector(".fechar");
+
+    document.querySelectorAll(".open-modal").forEach(card => {
+
+        card.addEventListener("click", function () {
+
+            const livroId = this.dataset.id;
+
+            fetch("../livros/detalhes.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "id=" + livroId
+            })
+            .then(r => r.json())
+            .then(data => {
+
+                if (data.erro) {
+                    alert(data.erro);
+                    return;
+                }
+
+                const caminhoImg = data.imagem
+                    ? "../../uploads/" + data.imagem
+                    : "../../img/default.png";
+
+                document.getElementById("detalhe-img").src = caminhoImg;
+                document.getElementById("detalhe-titulo").innerText = data.titulo;
+                document.getElementById("detalhe-autor").innerText = data.autor;
+                document.getElementById("detalhe-sinopse").innerText = data.sinopse;
+                document.getElementById("possui_pdf").innerText = data.arquivo_pdf ? "Sim" : "Não";
+                document.getElementById("detalhe-custo").innerText = data.custo_aluguel;
+
+                modal.style.display = "flex";
+            });
+        });
+    });
+
+    fechar.onclick = () => modal.style.display = "none";
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+    });
+});
+</script>
     <script>
         function openMenu() {
             document.getElementById("sideMenu").style.width = "250px";
