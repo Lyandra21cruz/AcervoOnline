@@ -1024,7 +1024,7 @@ if (!isset($_SESSION['usuario'])) {
         </div>
 
         <div class="bottom">
-            © 2024 Livros. Todos os direitos reservados.
+            © 2025 Livros. Todos os direitos reservados.
         </div>
     </footer>
 
