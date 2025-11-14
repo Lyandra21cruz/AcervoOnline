@@ -15,6 +15,67 @@ if (!isset($_SESSION['usuario'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AcervoOnline - Dashboard</title>
     <style>
+/* ==== CARROSSEL DE LIVROS (CAPAS GRANDES E SEM FUNDO) ==== */
+.livros-container {
+    background: #E1D4C2;
+    padding: 40px 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+#carrossel-comprados {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 12px;
+    justify-content: flex-start;
+}
+
+#carrossel-comprados::-webkit-scrollbar {
+    display: none;
+}
+
+.livro-card {
+    flex: 0 0 auto;
+    width: 200px; /* 🔹 aumentei a largura */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.livro-inner {
+    background: transparent; /* sem fundo */
+    padding: 0;
+}
+
+.livro-inner:hover {
+    transform: scale(1.08); /* 🔹 aumenta levemente no hover */
+}
+
+.livro-capa {
+    width: 100%;
+    height: 300px; /* 🔹 capas maiores */
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.livro-inner:hover .livro-capa {
+    box-shadow: 0 10px 18px rgba(0,0,0,0.45);
+}
+
+.livro-titulo {
+    color: #4a2c20;
+    margin-top: 10px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+
+
+
+
         * {
             margin: 0;
             padding: 0;
@@ -143,6 +204,48 @@ if (!isset($_SESSION['usuario'])) {
             font-size: 20px;
             color: #fff;
         }
+
+
+        /* === BARRA DE PESQUISA NO TOPO === */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 2px solid #b08b73;
+            height: 35px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .search-bar button {
+            background-color: #4a2c20;
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #b08b73;
+        }
+
+        .search-bar i {
+            font-size: 15px;
+        }
+
 
         /* Botão de sair */
         .btn-logout {
@@ -546,58 +649,67 @@ if (!isset($_SESSION['usuario'])) {
         }
 
 
-/* === TELA DE CARREGAMENTO PROFISSIONAL === */
-.loading-screen {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(180deg, #d8b892 0%, #a9744f 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease;
-}
+        /* === TELA DE CARREGAMENTO PROFISSIONAL === */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, #d8b892 0%, #a9744f 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
 
-.loading-screen.active {
-    opacity: 1;
-    pointer-events: all;
-}
+        .loading-screen.active {
+            opacity: 1;
+            pointer-events: all;
+        }
 
-.loading-logo {
-    width: 220px;
-    max-width: 80%;
-    height: auto;
-    margin-bottom: 25px;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
-    animation: fadeIn 1s ease forwards;
-}
+        .loading-logo {
+            width: 220px;
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 25px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+            animation: fadeIn 1s ease forwards;
+        }
 
-.spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid #fff;
-    border-radius: 50%;
-    animation: spin 1.2s linear infinite;
-    box-shadow: 0 0 10px rgba(255,255,255,0.5);
-}
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -605,7 +717,18 @@ if (!isset($_SESSION['usuario'])) {
 
     <header>
         <h1>AcervoOnline</h1>
+
         <div class="menu">
+            <!-- 🔍 Barra de pesquisa -->
+            <div class="search-bar">
+                <form action="buscar.php" method="GET" style="display: flex; align-items: center;">
+                    <input type="text" name="q" id="searchInput" placeholder="Buscar livros..." required>
+                    <button type="submit" id="searchBtn">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+
             <a href="carrinho.php">
                 <i class="fa-solid fa-cart-shopping"></i>
             </a>
@@ -670,13 +793,67 @@ if (!isset($_SESSION['usuario'])) {
         </a>
     </div>
 
-    <div class="section">
-        <h3>Mais lidos</h3>
-        <div class="livros">
-            <div class="livro">
+<div class="section">
+    <h3>Mais comprados</h3>
 
-            </div>
+    <div class="carrossel-container livros-container">
+        <button class="btn-nav left" aria-label="Anterior" onclick="scrollCarouselComprados(-1)">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="carrossel" id="carrossel-comprados">
+            <?php
+            require_once "../usuario/conexao.php";
+
+            try {
+                // Busca todos os livros cadastrados
+                $stmt = $pdo->query("SELECT * FROM livros");
+
+                if ($stmt->rowCount() > 0) {
+                    while ($livro = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                        // --- Verifica caminho da imagem corretamente ---
+                        $capa = "";
+
+                        if (!empty($livro['imagem'])) {
+                            // Se o campo já contém 'uploads/', usa direto
+                            if (strpos($livro['imagem'], 'uploads/') !== false) {
+                                $capa = "../../" . $livro['imagem'];
+                            }
+                            // Se for só o nome do arquivo, adiciona o caminho da pasta uploads
+                            else {
+                                $capa = "../../uploads/" . $livro['imagem'];
+                            }
+                        } else {
+                            // Imagem padrão se não houver
+                            $capa = "../../img/sem-capa.png";
+                        }
+
+                        // Exibe o card do livro
+                        echo "
+                        <div class='livro-card'>
+                            <div class='livro-inner'>
+                                <img src='{$capa}' alt='{$livro['titulo']}' class='livro-capa'>
+                                <p class='livro-titulo'>{$livro['titulo']}</p>
+                            </div>
+                        </div>";
+                    }
+                } else {
+                    echo "<p>Nenhum livro encontrado.</p>";
+                }
+            } catch (PDOException $e) {
+                echo "<p>Erro ao carregar livros: " . $e->getMessage() . "</p>";
+            }
+            ?>
         </div>
+
+        <button class="btn-nav right" aria-label="Próximo" onclick="scrollCarouselComprados(1)">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+
 
         <div class="section">
             <h3>Explorar por gênero</h3>
@@ -908,34 +1085,51 @@ if (!isset($_SESSION['usuario'])) {
 
         })();
     </script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const generoLinks = document.querySelectorAll(".genero");
-    const loading = document.getElementById("loadingScreen");
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const generoLinks = document.querySelectorAll(".genero");
+            const loading = document.getElementById("loadingScreen");
 
-    generoLinks.forEach(link => {
-        link.addEventListener("click", event => {
-            event.preventDefault();
-            const destino = link.getAttribute("href");
+            generoLinks.forEach(link => {
+                link.addEventListener("click", event => {
+                    event.preventDefault();
+                    const destino = link.getAttribute("href");
 
-            // ativa o overlay
-            loading.classList.add("active");
+                    // ativa o overlay
+                    loading.classList.add("active");
 
-            // espera um pouco e redireciona
-            setTimeout(() => {
-                window.location.href = destino;
-            }, 1500);
+                    // espera um pouco e redireciona
+                    setTimeout(() => {
+                        window.location.href = destino;
+                    }, 1500);
+                });
+            });
+
+            // garante que ao voltar o overlay suma
+            window.addEventListener("pageshow", () => {
+                loading.classList.remove("active");
+            });
         });
-    });
+    </script>
+    </script>
 
-    // garante que ao voltar o overlay suma
-    window.addEventListener("pageshow", () => {
-        loading.classList.remove("active");
+    
+<script>
+function scrollCarouselComprados(direction) {
+    const carrossel = document.getElementById('carrossel-comprados');
+    const card = carrossel.querySelector('.livro-card');
+    if (!card) return;
+
+    const gap = parseFloat(getComputedStyle(carrossel).gap) || 24;
+    const step = card.getBoundingClientRect().width + gap;
+
+    carrossel.scrollBy({
+        left: direction > 0 ? step : -step,
+        behavior: 'smooth'
     });
-});
+}
 </script>
 
-</script>
 
 
 </body>
