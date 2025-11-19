@@ -26,7 +26,8 @@ if ($livro) {
         'titulo' => $livro['titulo'],
         'autor'  => $livro['autor'],
         'imagem' => $livro['imagem'],
-        'preco'  => $livro['custo_aluguel']
+        'preco'  => $livro['custo_aluguel'],
+        'pdf' => $livro['arquivo_pdf'] ?? 'não possui pdf'
     ];
 }
 
