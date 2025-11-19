@@ -8,6 +8,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $emailLogado = $_SESSION['usuario']['email'];
+$idLogado = $_SESSION['usuario']['id_usuario'];
 
 // Conexão com o banco
 $host = "localhost";
@@ -32,8 +33,8 @@ if (!$perfil) {
 }
 
 // Buscar compras do usuário
-$stmtCompras = $pdo->prepare("SELECT * FROM compras WHERE email_usuario = :email");
-$stmtCompras->execute([':email' => $emailLogado]);
+$stmtCompras = $pdo->prepare("SELECT * FROM compras WHERE id_usuario = :id_usuario");
+$stmtCompras->execute([':id_usuario' => $idLogado]);
 $compras = $stmtCompras->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -246,8 +247,8 @@ $compras = $stmtCompras->fetchAll(PDO::FETCH_ASSOC);
         <?php if ($compras && count($compras) > 0): ?>
           <?php foreach ($compras as $livro): ?>
             <div class="livro">
-              <img src="../../uploads/<?php echo htmlspecialchars($livro['capa_livro']); ?>" alt="Capa do livro">
-              <p><?php echo htmlspecialchars($livro['titulo_livro']); ?></p>
+              <img src="../../uploads/<?php echo htmlspecialchars($livro['imagem']); ?>" alt="Capa do livro">
+              <p><?php echo htmlspecialchars($livro['titulo']); ?></p>
             </div>
           <?php endforeach; ?>
         <?php else: ?>
