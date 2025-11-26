@@ -585,7 +585,7 @@ if (!isset($_SESSION['usuario'])) {
   <rect x="1" y="1" width="98" height="98" rx="4" ry="4" />
 </svg>
 <div class="card-inner">
-  <h3 style="color: #fff; font-size: 40px;">Livros</h3>
+  <h3 style="color: #fff; font-size: 40px;">Biblioteca</h3>
   <p style="color: #6E473B; font-size: 25px;">Gerenciar os livros existentes</p>
   <a href="lista.php" class="cta">Ver Livros</a>
 </div>
