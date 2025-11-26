@@ -331,7 +331,7 @@ session_start();
 
                     <div><?php echo htmlspecialchars($livro['autor']); ?></div>
 
-                    <div>18/Setembro</div>
+                    <div><?php echo date("d/m/Y"); ?></div>
 
                     <div class="preco">
                         R$<?php echo number_format($livro['preco'], 2, ',', '.'); ?><br>
