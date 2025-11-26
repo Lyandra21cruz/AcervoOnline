@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang='pt-br'>
+<head>
+<meta charset='UTF-8'>
+<title>Recibo 1764162498</title>
+
+<body>
+<style>
+/* ==== BODY / FUNDO ==== */
+body {
+    margin: 0;
+    padding: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(145deg, #5e3c2f, #a17863, #d2b48c);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* ==== CARD GLASS ==== */
+.card {
+    width: 90%;
+    max-width: 650px;
+    background: rgba(139, 69, 19, 0.18);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    padding: 50px 40px;
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 
+        0 20px 50px rgba(0,0,0,0.35),
+        inset 0 0 20px rgba(255,255,255,0.05);
+    animation: fadeIn 0.7s ease forwards;
+}
+
+/* ANIMAÇÃO */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(25px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==== TITULO ==== */
+h1 {
+    text-align: center;
+    color: #4b2e2e;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 35px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+}
+
+/* ==== LISTA ==== */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* ==== ITEM DO LIVRO ==== */
+.item-livro {
+    background: rgba(92, 51, 23, 0.9);
+    color: #fff;
+    border-radius: 20px;
+    padding: 20px 22px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    box-shadow: 
+        0 12px 30px rgba(0,0,0,0.35),
+        inset 0 0 8px rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item-livro:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.4), inset 0 0 10px rgba(255,255,255,0.1);
+}
+
+/* ==== IMAGEM ==== */
+.item-livro img {
+    width: 85px;
+    height: 115px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-right: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+/* ==== INFORMAÇÕES ==== */
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info .titulo {
+    font-size: 19px;
+    font-weight: 800;
+    color: #f5e0c3;
+}
+
+.info .autor {
+    font-size: 15px;
+    opacity: 0.85;
+    color: #e3d1b3;
+}
+
+/* ==== PREÇO ==== */
+.preco {
+    margin-left: auto;
+    font-size: 18px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ==== OBRIGADO ==== */
+.thanks {
+    margin-top: 40px;
+    font-size: 24px;
+    color: #5a2e2e;
+    text-align: center;
+    font-weight: 900;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+}
+
+/* ==== BOTÃO VOLTAR ==== */
+.btn-voltar {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 16px 32px;
+    background: linear-gradient(145deg, #8b4513, #a0522d);
+    color: #fff;
+    border-radius: 18px;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-voltar:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 16px 30px rgba(0,0,0,0.4);
+}
+
+</style>
+
+</head>
+<body>
+
+<div class='card'>
+    <h1>Recibo de Compra #1764162498</h1>
+    <ul>
+
+<li class='item-livro'>
+    <img src='../../../uploads/1762348046_9.jpg'>
+    <div class='info'>
+        <div class='titulo'>Percy Jackson e o Ladrão de Raios</div>
+        <div class='autor'>Rick Riordan</div>
+    </div>
+    <div class='preco'>R$ 60,00</div>
+</li>
+    </ul>
+    <p class='thanks'>Obrigado pela compra!</p>
+
+</div>
+
+</body>
+</html>
