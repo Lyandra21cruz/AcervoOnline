@@ -20,90 +20,76 @@ $reciboHtml = "
 
 <body>
 <style>
-/* ==== BODY / FUNDO ==== */
+/* ===== FUNDO ===== */
 body {
     margin: 0;
     padding: 40px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(145deg, #4b2e1e, #52341dff, #a98a62ff);
     min-height: 100vh;
-    background: linear-gradient(145deg, #5e3c2f, #a17863, #d2b48c);
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    font-family: serif;
 }
 
-/* ==== CARD GLASS ==== */
+/* ===== RECIBO ===== */
 .card {
-    width: 90%;
-    max-width: 650px;
-    background: rgba(139, 69, 19, 0.18);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    padding: 50px 40px;
-    border-radius: 32px;
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 
-        0 20px 50px rgba(0,0,0,0.35),
-        inset 0 0 20px rgba(255,255,255,0.05);
-    animation: fadeIn 0.7s ease forwards;
+    width: 95%;
+    max-width: 750px;
+    background: #fcf7f2;
+    padding: 60px 55px;
+    border-radius: 12px;
+    border: 2px solid #c9b59e;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+    color: #2e1d14;
 }
 
-/* ANIMAÇÃO */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(25px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ==== TITULO ==== */
-h1 {
+/* ===== TÍTULOS ===== */
+.card h1 {
     text-align: center;
-    color: #4b2e2e;
-    font-size: 32px;
+    font-size: 42px;
     font-weight: 900;
-    margin-bottom: 35px;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-    letter-spacing: 1px;
-}
-
-/* ==== LISTA ==== */
-ul {
-    list-style: none;
-    padding: 0;
     margin: 0;
+    color: #3c2417;
 }
 
-/* ==== ITEM DO LIVRO ==== */
+.card h2 {
+    text-align: center;
+    font-size: 22px;
+    margin-top: 8px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    color: #55372a;
+}
+
+/* ===== LINHA ===== */
+.linha {
+    width: 100%;
+    height: 2px;
+    background: #b89a7c;
+    margin: 25px 0;
+}
+
+/* ===== LISTA DE ITENS ===== */
 .item-livro {
-    background: rgba(92, 51, 23, 0.9);
-    color: #fff;
-    border-radius: 20px;
-    padding: 20px 22px;
-    margin-bottom: 22px;
     display: flex;
     align-items: center;
-    box-shadow: 
-        0 12px 30px rgba(0,0,0,0.35),
-        inset 0 0 8px rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 18px 10px;
+    background: #f4e8d8;
+    border-radius: 12px;
+    border: 1px solid #d7c1a8;
+    margin-bottom: 18px;
 }
 
-.item-livro:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 18px 35px rgba(0,0,0,0.4), inset 0 0 10px rgba(255,255,255,0.1);
-}
-
-/* ==== IMAGEM ==== */
 .item-livro img {
     width: 85px;
     height: 115px;
-    object-fit: cover;
-    border-radius: 14px;
+    border-radius: 10px;
     margin-right: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
-/* ==== INFORMAÇÕES ==== */
 .info {
     display: flex;
     flex-direction: column;
@@ -113,66 +99,44 @@ ul {
 .info .titulo {
     font-size: 19px;
     font-weight: 800;
-    color: #f5e0c3;
+    color: #3b2518;
 }
 
 .info .autor {
     font-size: 15px;
-    opacity: 0.85;
-    color: #e3d1b3;
+    color: #6d4d38;
 }
 
-/* ==== PREÇO ==== */
+/* ===== PREÇO ===== */
 .preco {
     margin-left: auto;
     font-size: 18px;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.12);
-    padding: 10px 16px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.25);
-    color: #fff;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    font-weight: bold;
+    color: #2e1d14;
 }
 
-/* ==== OBRIGADO ==== */
+/* ===== OBRIGADO ===== */
 .thanks {
     margin-top: 40px;
-    font-size: 24px;
-    color: #5a2e2e;
     text-align: center;
+    font-size: 24px;
     font-weight: 900;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+    color: #4b2e2e;
 }
 
-/* ==== BOTÃO VOLTAR ==== */
-.btn-voltar {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 16px 32px;
-    background: linear-gradient(145deg, #8b4513, #a0522d);
-    color: #fff;
-    border-radius: 18px;
-    font-weight: 700;
-    font-size: 18px;
-    text-decoration: none;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.btn-voltar:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 16px 30px rgba(0,0,0,0.4);
-}
 
 </style>
 
 </head>
 <body>
-
 <div class='card'>
-    <h1>Recibo de Compra #$reciboId</h1>
+    <h1>RECIBO</h1>
+    <h2>LIVRO DE ACERVO ONLINE</h2>
+
+    <div class='linha'></div>
+
     <ul>
+
 ";
 
 
@@ -215,8 +179,12 @@ foreach ($carrinho as $livro) {
 }
 
 $reciboHtml .= "
-    </ul>
+       </ul>
+
+    <div class='linha'></div>
+
     <p class='thanks'>Obrigado pela compra!</p>
+</div>
 
 </div>
 
