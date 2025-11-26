@@ -18,113 +18,125 @@ $reciboHtml = "
 <meta charset='UTF-8'>
 <title>Recibo $reciboId</title>
 
+<body>
 <style>
+/* ===== FUNDO ===== */
 body {
     margin: 0;
     padding: 40px;
-    background: #6b4135;
-    font-family: 'Georgia', serif;
+    background: linear-gradient(145deg, #4b2e1e, #52341dff, #a98a62ff);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    font-family: serif;
 }
 
+/* ===== RECIBO ===== */
 .card {
-    width: 450px;
-    background: #e7dbcd;
-    padding: 30px;
+    width: 95%;
+    max-width: 750px;
+    background: #fcf7f2;
+    padding: 60px 55px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, .35);
+    border: 2px solid #c9b59e;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+    color: #2e1d14;
 }
 
-h1 {
-    text-align: left;
-    color: #4b2e2e;
-    font-size: 24px;
-    margin-bottom: 25px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
+/* ===== TÍTULOS ===== */
+.card h1 {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 900;
     margin: 0;
+    color: #3c2417;
 }
 
+.card h2 {
+    text-align: center;
+    font-size: 22px;
+    margin-top: 8px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    color: #55372a;
+}
+
+/* ===== LINHA ===== */
+.linha {
+    width: 100%;
+    height: 2px;
+    background: #b89a7c;
+    margin: 25px 0;
+}
+
+/* ===== LISTA DE ITENS ===== */
 .item-livro {
-    background: #5b3a33;
-    color: #fff;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 15px;
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    padding: 18px 10px;
+    background: #f4e8d8;
+    border-radius: 12px;
+    border: 1px solid #d7c1a8;
+    margin-bottom: 18px;
 }
 
 .item-livro img {
-    width: 70px;
-    height: 100px;
+    width: 85px;
+    height: 115px;
+    border-radius: 10px;
+    margin-right: 20px;
     object-fit: cover;
-    border-radius: 8px;
-    margin-right: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
 .info {
     display: flex;
     flex-direction: column;
+    gap: 6px;
 }
 
 .info .titulo {
-    font-size: 17px;
-    font-weight: bold;
+    font-size: 19px;
+    font-weight: 800;
+    color: #3b2518;
 }
 
 .info .autor {
-    font-size: 14px;
-    opacity: 0.8;
+    font-size: 15px;
+    color: #6d4d38;
 }
 
+/* ===== PREÇO ===== */
 .preco {
     margin-left: auto;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: bold;
-    background: #7a5047;
-    padding: 6px 10px;
-    border-radius: 8px;
+    color: #2e1d14;
 }
 
+/* ===== OBRIGADO ===== */
 .thanks {
-    margin-top: 25px;
-    font-size: 20px;
-    color: #7a3b3b;
+    margin-top: 40px;
     text-align: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #4b2e2e;
 }
 
-.btn-voltar {
-    display: inline-block;
-    margin-top: 25px;
-    padding: 10px 20px;
-    background: #7a3b3b;
-    color: #fff;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 16px;
-    text-decoration: none;
-    transition: 0.2s;
-}
-
-.btn-voltar:hover {
-    background: #5c2a2a;
-}
 
 </style>
 
 </head>
 <body>
-
 <div class='card'>
-    <h1>Recibo de Compra #$reciboId</h1>
+    <h1>RECIBO</h1>
+    <h2>LIVRO DE ACERVO ONLINE</h2>
+
+    <div class='linha'></div>
+
     <ul>
+
 ";
 
 
@@ -167,8 +179,12 @@ foreach ($carrinho as $livro) {
 }
 
 $reciboHtml .= "
-    </ul>
+       </ul>
+
+    <div class='linha'></div>
+
     <p class='thanks'>Obrigado pela compra!</p>
+</div>
 
 </div>
 

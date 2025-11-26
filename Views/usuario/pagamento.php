@@ -19,154 +19,186 @@ $_SESSION['codigo_pagamento'] = $codigo;
 $qrData = "Pagamento Codigo: $codigo";
 $qrCodeUrl = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=" . urlencode($qrData);
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Pagamento</title>
-
 <style>
+
+/* ======== FUNDO ======== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    background: url("../../img/cabeçabranca3.png") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: flex-end; /* empurra o conteúdo para a direita */
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ======== CARD ======== */
+.caixa {
+    background: rgba(243, 233, 221, 0.65); /* mais transparente */
+    width: 100%;
+    max-width: 420px; /* menor */
+    padding: 32px;
+    text-align: center;
+    border-radius: 26px;
+    box-shadow:
+        0 22px 45px rgba(0, 0, 0, 0.30),
+        inset 0 0 12px rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255,255,255,0.4);
+    animation: fade .6s ease forwards;
+    backdrop-filter: blur(6px);
+    margin-right: 40px; /* desloca mais pra direita */
+}
+
+/* ======== TÍTULO ======== */
+h1 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 22px;
+    color: #4b3a2e;
+}
+
+/* ======== LISTA DOS ITENS ======== */
+ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 22px;
+}
+
+ul li {
+    background: rgba(255, 255, 255, 0.88);
+    padding: 14px 16px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: #4b3a2e;
+    font-weight: 600;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+ul li:hover {
+    transform: scale(1.02);
+}
+
+/* ======== TOTAL ======== */
+h2 {
+    font-size: 20px;
+    margin: 18px 0 28px;
+    color: #4b3a2e;
+    font-weight: 700;
+}
+
+/* ======== SUBTÍTULO ======== */
+h3 {
+    margin-top: 5px;
+    margin-bottom: 14px;
+    color: #4b3a2e;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* ======== QR CODE ======== */
+.qr-box {
+    background: rgba(255, 255, 255, 0.75); /* mais transparente */
+    padding: 20px;
+    border-radius: 20px;
+    margin: 0 auto;
+    box-shadow:
+        0 14px 30px rgba(0,0,0,0.16),
+        inset 0 0 10px rgba(0,0,0,0.05);
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: 0.3s;
+}
+
+.qr-box:hover {
+    transform: scale(1.02);
+}
+
+.qr-box img {
+    width: 100%;
+    max-width: 220px;
+    border-radius: 14px;
+}
+
+/* ======== CÓDIGO OPERAÇÃO ======== */
+p {
+    margin-top: 16px;
+    font-size: 16px;
+    color: #4b3a2e;
+    font-weight: bold;
+}
+
+/* ======== BOTÃO ======== */
+.botao {
+    margin-top: 32px;
+    display: block;
+    text-decoration: none;
+    background: #4b3a2e;
+    color: white;
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 700;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.28);
+    transition: .3s;
+}
+
+.botao:hover {
+    background: #3b2d22;
+    transform: translateY(-3px);
+}
+
+/* ======== ANIMAÇÃO ======== */
+@keyframes fade {
+    from { opacity: 0; transform: translateY(25px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ======== RESPONSIVIDADE ======== */
+@media (max-width: 780px) {
     body {
-        font-family: 'Inter', sans-serif;
-        background: #6b4135; /* fundo elegante marrom */
-        margin: 0;
-        padding: 40px 0;
-        display: flex;
-        justify-content: center;
+        justify-content: center; /* no celular volta para o centro */
+        padding: 15px;
     }
 
     .caixa {
-        background: #e7dbcd; /* bege suave */
-        width: 440px;
-        padding: 35px;
-        border-radius: 16px;
-        box-shadow: 0 6px 26px rgba(0,0,0,0.30);
-        text-align: center;
+        margin-right: 0;
+        max-width: 90%;
     }
-
-    h1 {
-        font-family: Georgia, serif;
-        color: #4b2e2e;
-        font-size: 30px;
-        margin-bottom: 10px;
-    }
-
-    h3 {
-        font-family: Georgia, serif;
-        color: #5b3a33;
-        font-size: 18px;
-        margin-bottom: 20px;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 25px 0;
-        text-align: left;
-    }
-
-    ul li {
-        background: #5b3a33;
-        color: #fff;
-        margin-bottom: 12px;
-        padding: 12px;
-        border-radius: 10px;
-        font-size: 16px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    }
-
-    ul li span.titulo {
-        font-weight: bold;
-        max-width: 180px;
-        display: block;
-    }
-
-    ul li span.preco {
-        background: #7a5047;
-        padding: 6px 10px;
-        border-radius: 8px;
-        font-weight: bold;
-        font-size: 15px;
-    }
-
-    h2 {
-        font-family: Georgia, serif;
-        color: #4b2e2e;
-        font-size: 24px;
-        margin-top: 20px;
-    }
-
-    /* QR CODE */
-    .qr-box {
-        background: #5b3a33;
-        padding: 15px;
-        border-radius: 12px;
-        display: inline-block;
-        margin: 20px 0;
-        box-shadow: 0 3px 15px rgba(0,0,0,0.25);
-    }
-
-    .qr-box img {
-        border-radius: 10px;
-    }
-
-    p {
-        color: #4b2e2e;
-        font-size: 17px;
-        margin-top: 15px;
-        font-weight: bold;
-    }
-
-    .botao {
-        display: inline-block;
-        width: 100%;
-        background: #7a3b3b;
-        color: white;
-        padding: 14px;
-        border-radius: 10px;
-        text-decoration: none;
-        font-size: 18px;
-        margin-top: 25px;
-        transition: .2s;
-        box-shadow: 0 3px 15px rgba(0,0,0,0.25);
-    }
-
-    .botao:hover {
-        background: #5c2d2d;
-    }
-
+}
 
 </style>
 
-</head>
-<body>
 
+<body>
 <div class="caixa">
     <h1>Pagamento</h1>
-   <ul>
-    <?php foreach($carrinho as $livro): ?>
-        <li>
-            <span class="titulo">📘 <?php echo $livro['titulo']; ?></span>
-            <span class="preco">R$ <?php echo number_format($livro['preco'], 2, ",", "."); ?></span>
-        </li>
-    <?php endforeach; ?>
-</ul>
 
-<h2>Total: R$ <?php echo number_format($total, 2, ",", "."); ?></h2>
+    <ul>
+        <?php foreach($carrinho as $livro): ?>
+            <li>
+                <span><?php echo $livro['titulo']; ?></span>
+                <span>R$ <?php echo number_format($livro['preco'], 2, ",", "."); ?></span>
+            </li>
+        <?php endforeach; ?>
+    </ul>
 
-<h3>Escaneie o QR Code:</h3>
+    <h2>Total: R$ <?php echo number_format($total, 2, ",", "."); ?></h2>
 
-<div class="qr-box">
-    <img src="../../img/images.png" width="260">
-</div>
+    <h3>Escaneie o QR Code:</h3>
 
-<p>Código da operação: <b><?php echo $codigo; ?></b></p>
+    <div class="qr-box">
+        <img src="../../img/images.png">
+    </div>
+
+    <p>Código da operação: <b><?php echo $codigo; ?></b></p>
 
     <a href="confirmar_pagamento.php" class="botao">Confirmar Pagamento</a>
 </div>
-
 </body>
-</html>

@@ -28,7 +28,7 @@ session_start();
    ============================================================ */
         .topo {
             width: 100%;
-            background: linear-gradient(135deg, #7b4f45, #6f463d);
+            background: linear-gradient(135deg, #60342aff, #60342aff);
             color: white;
             display: flex;
             align-items: center;
@@ -61,7 +61,6 @@ session_start();
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.35);
         }
 
-        /* --------------- HAMBÚRGUER --------------- */
         .menu-button {
             width: 55px;
             height: 47px;
@@ -111,12 +110,10 @@ session_start();
         }
 
 
-        /* ============================================================
-   -------------------- MENU LATERAL --------------------
-   ============================================================ */
+
         #menu-lateral {
             width: 320px;
-            background: #7b4f45;
+            background: #3a2323;
             position: fixed;
             right: -340px;
             /* abre pela direita */
@@ -171,9 +168,7 @@ session_start();
         }
 
 
-        /* ============================================================
-   -------------------- CARRINHO --------------------
-   ============================================================ */
+   
         .carrinho {
             width: 100%;
             max-width: 1200px;
@@ -187,7 +182,7 @@ session_start();
             grid-template-columns: 2fr 1.2fr 1fr 0.7fr;
             padding: 20px 12px;
             font-weight: bold;
-            color: #3d2d27;
+            color: #3a2323;
             border-bottom: 2px solid #b69e8d;
             font-size: 17px;
             letter-spacing: .5px;
@@ -224,7 +219,7 @@ session_start();
         .titulo {
             font-weight: bold;
             font-size: 19px;
-            color: #3c2f2a;
+            color: #3a2323;
             text-decoration: underline;
         }
 
@@ -238,13 +233,13 @@ session_start();
         .preco {
             font-size: 18px;
             font-weight: bold;
-            color: #3c302c;
+            color: #3a2323;
             text-align: right;
         }
 
         /* remover */
         .remover {
-            color: #a34e4e;
+            color: #3a2323;
             text-decoration: none;
             font-weight: bold;
         }
@@ -331,7 +326,7 @@ session_start();
 
                     <div><?php echo htmlspecialchars($livro['autor']); ?></div>
 
-                    <div>18/Setembro</div>
+                    <div><?php echo date("d/m/Y"); ?></div>
 
                     <div class="preco">
                         R$<?php echo number_format($livro['preco'], 2, ',', '.'); ?><br>
