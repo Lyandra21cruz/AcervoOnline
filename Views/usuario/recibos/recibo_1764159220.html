@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang='pt-br'>
+<head>
+<meta charset='UTF-8'>
+<title>Recibo 1764159220</title>
+
+<body>
+<style>
+body {
+    margin: 0;
+    padding: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #8b4513, #a0522d, #d2b48c); /* gradiente marrom quente */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* ==== CARD GLASS ==== */
+.card {
+    width: 90%; /* ocupa boa parte da tela */
+    max-width: 600px; /* limite máximo para telas grandes */
+    background: rgba(139, 69, 19, 0.18); /* marrom claro translúcido */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 30px;
+    border: 1px solid rgba(139, 69, 19, 0.35);
+    box-shadow: 
+        0 15px 40px rgba(0,0,0,0.3),
+        inset 0 0 15px rgba(255,255,255,0.1);
+    animation: fadeIn 0.6s ease;
+}
+
+/* ANIMAÇÃO */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    text-align: center;
+    color: #4b2e2e;
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* ==== ITEM DO LIVRO ==== */
+.item-livro {
+    background: rgba(92, 51, 23, 0.85); /* marrom escuro translúcido */
+    color: #fff;
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 
+        0 10px 25px rgba(0,0,0,0.3),
+        inset 0 0 6px rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-livro:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.35), inset 0 0 8px rgba(255,255,255,0.08);
+}
+
+/* Imagem */
+.item-livro img {
+    width: 80px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-right: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+/* Informações */
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info .titulo {
+    font-size: 18px;
+    font-weight: 800;
+    color: #f5e0c3;
+}
+
+.info .autor {
+    font-size: 15px;
+    opacity: 0.85;
+    color: #e3d1b3;
+}
+
+/* Preço */
+.preco {
+    margin-left: auto;
+    font-size: 17px;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 9px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Obrigado */
+.thanks {
+    margin-top: 35px;
+    font-size: 22px;
+    color: #5a2e2e;
+    text-align: center;
+    font-weight: 900;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Botão Voltar */
+.btn-voltar {
+    display: inline-block;
+    margin-top: 28px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #8b4513, #a0522d);
+    color: #fff;
+    border-radius: 16px;
+    font-weight: bold;
+    font-size: 17px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.28);
+    transition: .25s ease;
+}
+
+.btn-voltar:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.35);
+}
+
+
+</style>
+
+</head>
+<body>
+
+<div class='card'>
+    <h1>Recibo de Compra #1764159220</h1>
+    <ul>
+
+<li class='item-livro'>
+    <img src='../../../uploads/1762346513_2.jpg'>
+    <div class='info'>
+        <div class='titulo'>Uma Aventura Em Viagem</div>
+        <div class='autor'>Ana Maria Magalhães & Isabel Alçada</div>
+    </div>
+    <div class='preco'>R$ 27,50</div>
+</li>
+    </ul>
+    <p class='thanks'>Obrigado pela compra!</p>
+
+</div>
+
+</body>
+</html>

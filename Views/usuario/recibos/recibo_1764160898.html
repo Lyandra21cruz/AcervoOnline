@@ -1,22 +1,9 @@
-<?php
-session_start();
-require_once "C:/Turma2/xampp/htdocs/AcervoOnline/Views/usuario/conexao.php";
 
-if (!isset($_SESSION['pagamento_carrinho'])) {
-    header("Location: carrinho.php");
-    exit;
-}
-
-$id_usuario = $_SESSION['usuario']['id_usuario'];
-$carrinho = $_SESSION['pagamento_carrinho'];
-
-$reciboId = time();
-$reciboHtml = "
 <!DOCTYPE html>
 <html lang='pt-br'>
 <head>
 <meta charset='UTF-8'>
-<title>Recibo $reciboId</title>
+<title>Recibo 1764160898</title>
 
 <body>
 <style>
@@ -171,50 +158,17 @@ ul {
 <body>
 
 <div class='card'>
-    <h1>Recibo de Compra #$reciboId</h1>
+    <h1>Recibo de Compra #1764160898</h1>
     <ul>
-";
 
-
-foreach ($carrinho as $livro) {
-
-    $titulo = $livro['titulo'];
-    $autor = $livro['autor'];
-    $preco = $livro['preco'];
-    $imagem = $livro['imagem'];
-    $pdf = isset($livro['pdf']) ? $livro['pdf'] : null;
-
-    // SALVAR NA TABELA
-    $sql = $pdo->prepare("
-        INSERT INTO compras (id_usuario, titulo, autor, preco, imagem, pdf, status)
-        VALUES (?,?,?,?,?,?, 'CONCLUIDA')
-    ");
-    $sql->execute([$id_usuario, $titulo, $autor, $preco, $imagem, $pdf]);
-
-  $reciboHtml .= "
 <li class='item-livro'>
-    <img src='../../../uploads/$imagem'>
+    <img src='../../../uploads/1762347495_6.webp'>
     <div class='info'>
-        <div class='titulo'>$titulo</div>
-        <div class='autor'>$autor</div>
+        <div class='titulo'>Grandes Exploradores Portugueses</div>
+        <div class='autor'>Susana Lima</div>
     </div>
-    <div class='preco'>R$ " . number_format($preco,2,",",".") . "</div>
-</li>";
-
-    // baixar pdf automaticamente se existir
-    if ($pdf) {
-    $origem = "../../uploads/pdf/" . $pdf;   // caminho real do pdf original
-    $destino = "pdf_compras/" . $pdf;  // para onde vai o arquivo comprado
-
-    // copiar o pdf real
-    if (file_exists($origem)) {
-        copy($origem, $destino);
-        $_SESSION['pdf_download'][] = $destino;
-    }
-}
-}
-
-$reciboHtml .= "
+    <div class='preco'>R$ 61,00</div>
+</li>
     </ul>
     <p class='thanks'>Obrigado pela compra!</p>
 
@@ -222,15 +176,3 @@ $reciboHtml .= "
 
 </body>
 </html>
-";
-
-// salvar recibo
-$file = "recibos/recibo_$reciboId.html";
-file_put_contents($file, $reciboHtml);
-
-// limpa carrinho da etapa
-unset($_SESSION['pagamento_carrinho']);
-
-header("Location: compra_concluida.php?recibo=$reciboId");
-exit;
-?>
