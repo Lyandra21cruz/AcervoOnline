@@ -316,7 +316,7 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p><strong>Sinopse:</strong> <span id="detalhe-sinopse"></span></p>
                   <p><strong>Pdf:</strong> <span id="possui_pdf"></span></p>
                 <p><strong>Custo:</strong> R$ <span id="detalhe-custo"></span></p>
-              <a id="modal-add-cart" class="btn-add" href="#" >
+                <a id="modal-add-cart" class="btn-add" href="#" >
                     <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
                 </a>
         </div>
@@ -326,47 +326,55 @@ $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById("modal-detalhes");
-    const fechar = document.querySelector(".fechar");
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("modal-detalhes");
+            const fechar = document.querySelector(".fechar");
+            const addCartLink = document.getElementById("modal-add-cart");
 
-    document.querySelectorAll(".livro a").forEach(link => {
-    link.addEventListener("click", function(e) {
-        e.preventDefault();
+            document.querySelectorAll(".livro a").forEach(link => {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault();
 
-        const livroId = new URL(this.href).searchParams.get("id");
+                    const livroId = new URL(this.href).searchParams.get("id");
 
-        fetch("detalhes.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: "id=" + livroId
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.erro) {
-                alert(data.erro);
-                return;
-            }
-console.log(data);
-            document.getElementById("detalhe-img").src = "../../uploads/" + data.imagem;
-            document.getElementById("detalhe-titulo").innerText = data.titulo;
-            document.getElementById("detalhe-autor").innerText = data.autor;
-            document.getElementById("detalhe-sinopse").innerText = data.sinopse || "Sem sinopse.";
-              document.getElementById("possui_pdf").innerText = data.arquivo_pdf || "Sem pdf.";
-            document.getElementById("detalhe-custo").innerText = data.custo_aluguel || "—";
+                    fetch("detalhes.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: "id=" + encodeURIComponent(livroId)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.erro) {
+                                alert(data.erro);
+                                return;
+                            }
 
-            modal.style.display = "flex";
-        })
-        .catch(err => console.error("Erro ao carregar detalhes:", err));
-    });
-});
+                            // preencher modal
+                            document.getElementById("detalhe-img").src = "../../uploads/" + data.imagem;
+                            document.getElementById("detalhe-titulo").innerText = data.titulo;
+                            document.getElementById("detalhe-autor").innerText = data.autor;
+                            document.getElementById("detalhe-sinopse").innerText = data.sinopse || "Sem sinopse.";
+                            document.getElementById("possui_pdf").innerText = data.arquivo_pdf || "Sem pdf.";
+                            document.getElementById("detalhe-custo").innerText = data.custo_aluguel || "—";
 
-    fechar.addEventListener("click", () => modal.style.display = "none");
+                            // **ATENÇÃO**: define o href do botão de adicionar ao carrinho com o id correto
+                            // use o campo exato que seu detalhes.php retorna (ex: data.id_livro ou data.id)
+                            const idParaCarrinho = data.id_livro ?? data.id ?? livroId;
+                            addCartLink.href = "adicionar_carrinho.php?id=" + encodeURIComponent(idParaCarrinho);
 
-    window.addEventListener("click", (e) => {
-        if (e.target === modal) modal.style.display = "none";
-    });
-});
+                            modal.style.display = "flex";
+                        })
+                        .catch(err => console.error("Erro ao carregar detalhes:", err));
+                });
+            });
+
+            fechar.addEventListener("click", () => modal.style.display = "none");
+
+            window.addEventListener("click", (e) => {
+                if (e.target === modal) modal.style.display = "none";
+            });
+        });
+    
 </script>
 </body>
 </html>
