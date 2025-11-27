@@ -568,11 +568,6 @@ if (!isset($_SESSION['usuario'])) {
     <div id="sideMenu" class="side-menu">
         <span class="closebtn" onclick="closeMenu()">&times;</span>
 
-        <a href="configuracoes.php">
-            <i class="fa-solid fa-gear"></i> Configurações
-        </a>
-
-
         <a href="../../index.php">
             <i class="fa-solid fa-right-from-bracket"></i> Sair
         </a>
